@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عضو هيئة تدريس - Takamoul</title>
+  <style>
+    @font-face {
+      font-family: 'GE Dinar';
+      src: url('./fonts/GE-Dinar-One-Medium.otf') format('opentype');
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body { font-family: 'GE Dinar', sans-serif; background:#fff; color:#333; line-height:1.6; }
+    .container { width:90%; max-width:1200px; margin:0 auto; }
+    header { background:#0084bd; color:#fff; padding:20px 0; }
+    header .container { display:flex; align-items:center; justify-content:space-between; }
+    header img { height:80px; }
+    nav ul { list-style:none; display:flex; }
+    nav li { margin-left:20px; }
+    nav a { color:#fff; text-decoration:none; font-weight:bold; }
+
+    .section { padding:50px 0; }
+    .section h2 { font-size:28px; margin-bottom:20px; text-align:center; }
+    .card { border:1px solid #ddd; border-radius:8px; padding:20px; text-align:center; box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-bottom:30px; }
+    .card h3 { font-size:22px; margin-bottom:10px; }
+    .card p { font-size:16px; margin-bottom:20px; text-align:center; }
+    .btn { background:#0084bd; color:#fff; padding:15px 30px; border:none; border-radius:5px; font-size:18px; cursor:pointer; }
+    footer { background:#0084bd; color:#fff; padding:20px 0; text-align:center; }
+    footer p { font-size:14px; }
+
+    /* Floating menu button now in white content area */
+    .menu-container { position: fixed; top: 140px; left: 20px; z-index:1000; }
+    .menu-btn {
+      background:#005f8a; color:#fff; padding:10px 20px;
+      border:none; border-radius:4px; cursor:pointer;
+      font-size:24px;
+    }
+    .dropdown-menu {
+      display:none; position:absolute; top:40px; left:0;
+      background:#fff; min-width:220px;
+      box-shadow:0 2px 5px rgba(0,0,0,0.2); border-radius:4px;
+      z-index:100;
+    }
+    .dropdown-menu a {
+      display:block; padding:10px 15px; color:#333;
+      text-decoration:none; border-bottom:1px solid #eee;
+    }
+    .dropdown-menu a:last-child { border-bottom:none; }
+    .dropdown-menu a:hover { background:#f0f8ff; }
+
+    .hidden { display:none; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div style="display:flex; align-items:center;">
+        <img src="images/Takamoul Logo.png" alt="Takamoul Logo" style="margin-right:20px;">
+        <nav>
+          <ul>
+            <li><a href="#">الرئيسية</a></li>
+            <li><a href="#">حول</a></li>
+            <li><a href="#">اتصل بنا</a></li>
+            <li><a href="#">تسجيل الدخول</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- burger menu moved below header -->
+  <div class="menu-container">
+    <button class="menu-btn" id="menu-toggle">☰</button>
+    <div class="dropdown-menu" id="main-menu">
+      <a href="#" data-target="profile">بياناتي</a>
+      <a href="#" data-target="orcid">ربط ORCID</a>
+      <a href="#" data-target="activities">أنشطتي العلمية</a>
+      <a href="#" data-target="supervision">الإشراف الأكاديمي</a>
+      <a href="#" data-target="initiatives">المبادرات</a>
+      <a href="#" data-target="admin-tasks">تكليفات إدارية</a>
+      <a href="#" data-target="report">التقرير البحثي</a>
+      <a href="#" data-target="uploads">إرفاق مستند</a>
+      <a href="#" data-target="notifications">الرسائل والإشعارات</a>
+    </div>
+  </div>
+
+  <!-- بياناتي -->
+  <section id="profile" class="section hidden">
+    <div class="container">
+      <h2>بياناتي</h2>
+      <div class="card">
+        <h3>ملفي الأكاديمي</h3>
+        <p>الاسم: د. ليلى محمد الزهراني</p>
+        <p>القسم: قسم علوم الحاسب - كلية الحاسب الآلي ونظم المعلومات</p>
+        <p>الدرجة العلمية: دكتوراه</p>
+        <p>التخصص: الذكاء الاصطناعي</p>
+        <p>ORCID: <span id="orcid-status-profile">لم يتم الربط بعد</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ربط ORCID -->
+  <section id="orcid" class="section hidden">
+    <div class="container">
+      <h2>ربط ORCID</h2>
+      <div class="card">
+        <h3>إدارة ربط ORCID</h3>
+        <p>حالة الربط: <span id="orcid-status">لم يتم الربط بعد</span></p>
+        <button class="btn" id="connect-orcid">ربط الحساب</button>
+      </div>
+    </div>
+  </section>
+  <!-- أنشطتي العلمية -->
+  <section id="activities" class="section hidden">
+    <div class="container">
+      <h2>أنشطتي العلمية</h2>
+      <div class="card">
+        <h3>الأبحاث المنشورة</h3>
+        <p>1. ورقة بعنوان "تحسين أداء التعلم العميق" - مجلة الذكاء الاصطناعي 2024</p>
+      </div>
+      <div class="card">
+        <h3>المؤتمرات وورش العمل</h3>
+        <p>مؤتمر نظم المعلومات العالمي 2023 - متحدث رئيسي</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- الإشراف الأكاديمي -->
+  <section id="supervision" class="section hidden">
+    <div class="container">
+      <h2>الإشراف الأكاديمي</h2>
+      <div class="card">
+        <h3>مشاريع تخرج</h3>
+        <p>- نظام توصية مالي ذكي (5 طلاب) 2024</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- المبادرات -->
+  <section id="initiatives" class="section hidden">
+    <div class="container">
+      <h2>المبادرات</h2>
+      <div class="card">
+        <h3>لجنة تطوير المنهج</h3>
+        <p>عضو لجنة تطوير منهج علوم الحاسب 2023</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- تكليفات إدارية -->
+  <section id="admin-tasks" class="section hidden">
+    <div class="container">
+      <h2>تكليفات إدارية</h2>
+      <div class="card">
+        <h3>رئيس لجنة الامتحانات</h3>
+        <p>تنظيم وإدارة امتحانات نهاية العام 2024</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- التقرير البحثي -->
+  <section id="report" class="section hidden">
+    <div class="container">
+      <h2>التقرير البحثي</h2>
+      <div class="card">
+        <h3>إحصائيات الأداء</h3>
+        <p>عدد الأبحاث: 10</p>
+        <p>الطلاب المشرف عليهم: 8</p>
+        <p>عدد الأنشطة: 6</p>
+        <p>حالة الربط ORCID: <span id="report-orcid-status">غير مرتبط</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- إرفاق مستند -->
+  <section id="uploads" class="section hidden">
+    <div class="container">
+      <h2>إرفاق مستند</h2>
+      <div class="card">
+        <input type="file" id="doc-upload" />
+        <p style="margin-top:10px;">رفع الأوراق العلمية، خطابات الدعوة، الشهادات الرسمية</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- الرسائل والإشعارات -->
+  <section id="notifications" class="section hidden">
+    <div class="container">
+      <h2>الرسائل والإشعارات</h2>
+      <div class="card">
+        <p>- لديك 2 أنشطة معلقة للموافقة</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p>
+    </div>
+  </footer>
+
+  <script>
+    // Dropdown toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainMenu   = document.getElementById('main-menu');
+    menuToggle.addEventListener('click', e => { e.stopPropagation(); mainMenu.style.display = mainMenu.style.display==='block'?'none':'block'; });
+    window.addEventListener('click', () => mainMenu.style.display='none');
+
+    // Section switcher
+    function showSection(id) { document.querySelectorAll('section').forEach(s=>s.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); mainMenu.style.display='none'; }
+    document.querySelectorAll('#main-menu a').forEach(a=>{ a.addEventListener('click', e=>{ e.preventDefault(); showSection(a.getAttribute('data-target')); }); });
+
+    // ORCID button logic (redirect to ORCID auth)
+    const CLIENT_ID    = "APP-xxx";
+    const REDIRECT_URI = "https://b8ecd6d38c5a.ngrok.app/callback";
+    document.getElementById('connect-orcid').addEventListener('click', () => {
+      const authUrl = [
+        "https://orcid.org/oauth/authorize",
+        `?client_id=${CLIENT_ID}`,
+        "&response_type=code",
+        "&scope=/authenticate",
+        `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`
+      ].join('');
+      window.location.href = authUrl;
+    });
+
+    // Show default section
+    showSection('profile');
+  </script>
+</body>
+</html>

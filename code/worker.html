@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عضو هيئة تدريس - Takamoul</title>
+  <style>
+    @font-face { font-family: 'GE Dinar'; src: url('./fonts/GE-Dinar-One-Medium.otf') format('opentype'); }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'GE Dinar', sans-serif; background:#fff; color:#333; line-height:1.6; }
+    .container { width:90%; max-width:1200px; margin:0 auto; }
+    header { background:#0084bd; color:#fff; padding:20px 0; }
+    header .container { display:flex; align-items:center; justify-content:space-between; }
+    header img { height:80px; }
+    nav ul { list-style:none; display:flex; }
+    nav li { margin-left:20px; }
+    nav a { color:#fff; text-decoration:none; font-weight:bold; }
+
+    .section { padding:50px 0; }
+    .section h2 { font-size:28px; margin-bottom:20px; text-align:center; }
+    .card { border:1px solid #ddd; border-radius:8px; padding:20px; text-align:center; box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-bottom:30px; }
+    .card h3 { font-size:22px; margin-bottom:10px; }
+    .card p { font-size:16px; margin-bottom:20px; text-align:center; }
+    .btn { background:#0084bd; color:#fff; padding:15px 30px; border:none; border-radius:5px; font-size:18px; cursor:pointer; }
+    footer { background:#0084bd; color:#fff; padding:20px 0; text-align:center; }
+    footer p { font-size:14px; }
+
+    /* Floating burger-menu in white area */
+    .menu-container { position:fixed; top:140px; left:20px; z-index:1000; }
+    .menu-btn { background:#005f8a; color:#fff; padding:10px 20px; border:none; border-radius:4px; cursor:pointer; font-size:24px; }
+    .dropdown-menu { display:none; position:absolute; top:40px; left:0; background:#fff; min-width:220px; box-shadow:0 2px 5px rgba(0,0,0,0.2); border-radius:4px; }
+    .dropdown-menu a { display:block; padding:10px 15px; color:#333; text-decoration:none; border-bottom:1px solid #eee; }
+    .dropdown-menu a:last-child { border-bottom:none; }
+    .dropdown-menu a:hover { background:#f0f8ff; }
+    .hidden { display:none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div style="display:flex; align-items:center;">
+        <img src="images/Takamoul Logo.png" alt="Takamoul Logo" style="margin-right:20px;">
+        <nav>
+          <ul>
+            <li><a href="#">الرئيسية</a></li>
+            <li><a href="#">حول</a></li>
+            <li><a href="#">اتصل بنا</a></li>
+            <li><a href="#">تسجيل الدخول</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- burger menu moved below header into white area -->
+  <div class="menu-container">
+    <button class="menu-btn" id="menu-toggle">☰</button>
+    <div class="dropdown-menu" id="main-menu">
+      <a href="#" data-target="profile">بياناتي</a>
+      <a href="#" data-target="orcid">ربط ORCID</a>
+      <a href="#" data-target="activities">الأنشطة</a>
+      <a href="#" data-target="training">الملف التدريبي</a>
+      <a href="#" data-target="initiatives">المبادرات</a>
+      <a href="#" data-target="report">تقرير الأداء</a>
+      <a href="#" data-target="uploads">إرفاق مستند</a>
+      <a href="#" data-target="notifications">الرسائل والإشعارات</a>
+      <a href="#" data-target="researcher">ملف الباحث الناشئ</a>
+    </div>
+  </div>
+
+  <!-- بياناتي -->
+  <section id="profile" class="section hidden">
+    <div class="container">
+      <h2>بياناتي</h2>
+      <div class="card">
+        <h3>معلومات الموظف</h3>
+        <p>الاسم: عبد الله بن علي الفارس</p>
+        <p>الجهة الإدارية: عمادة القبول والتسجيل</p>
+        <p>المسمى الوظيفي: أخصائي إداري</p>
+        <p>المرتبة الإدارية: المرتبة 5</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ربط ORCID -->
+  <section id="orcid" class="section hidden">
+    <div class="container">
+      <h2>ربط ORCID (اختياري)</h2>
+      <div class="card">
+        <h3>إدارة ربط ORCID</h3>
+        <p>يُستخدم لتوثيق الأبحاث أو الورش لدى الموظف</p>
+        <button class="btn" id="connect-orcid">ربط الحساب</button>
+        <p>حالة الربط: <span id="orcid-status">لم يتم الربط بعد</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- الأنشطة -->
+  <section id="activities" class="section hidden">
+    <div class="container">
+      <h2>الأنشطة</h2>
+      <div class="card">
+        <h3>المهام الإدارية</h3>
+        <p>- حضور اجتماع اللجان التنظيمية (مارس 2024)</p>
+        <p>- تنسيق مهام الإشراف على فعاليات القبول 2024</p>
+      </div>
+    </div>
+  </section>
+
+<!-- الملف التدريبي -->
+<section id="training" class="section hidden">
+    <div class="container">
+      <h2>الملف التدريبي</h2>
+      <div class="card">
+        <h3>شهادات الدورات</h3>
+        <p>- دورة إدارة الوقت (40 ساعة) – تقييم: 4.5/5</p>
+        <p>- دورة خدمة العملاء (30 ساعة) – تقييم: 4.8/5</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- المبادرات -->
+  <section id="initiatives" class="section hidden">
+    <div class="container">
+      <h2>المبادرات</h2>
+      <div class="card">
+        <h3>مبادرة التحول الرقمي</h3>
+        <p>مشاركة في تطوير نظام إدارة الوثائق 2023</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- تقرير الأداء -->
+  <section id="report" class="section hidden">
+    <div class="container">
+      <h2>تقرير الأداء</h2>
+      <div class="card">
+        <h3>إحصائيات</h3>
+        <p>عدد المهام المكتملة: 15</p>
+        <p>عدد الدورات المنجزة: 2</p>
+        <p>نسبة الإنجاز السنوي: 85%</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- إرفاق مستند -->
+  <section id="uploads" class="section hidden">
+    <div class="container">
+      <h2>إرفاق مستند</h2>
+      <div class="card">
+        <input type="file" id="doc-upload" />
+        <p style="margin-top:10px;">رفع خطابات التكليف والشهادات وتقارير العمل</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- الرسائل والإشعارات -->
+  <section id="notifications" class="section hidden">
+    <div class="container">
+      <h2>الرسائل والإشعارات</h2>
+      <div class="card">
+        <p>- لديك اجتماع لجنة غدًا</p>
+        <p>- حالة اعتماد مشاركاتك: قيد المراجعة</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ملف الباحث الناشئ -->
+  <section id="researcher" class="section hidden">
+    <div class="container">
+      <h2>ملف الباحث الناشئ</h2>
+      <div class="card">
+        <h3>إشعارات</h3>
+        <p>- دورة توثيق الأبحاث متاحة الآن</p>
+        <p>- لديك طلب توثيق جديد</p>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p>
+    </div>
+  </footer>
+
+  <script>
+    // Dropdown toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainMenu   = document.getElementById('main-menu');
+    menuToggle.addEventListener('click', e => { e.stopPropagation(); mainMenu.style.display = mainMenu.style.display==='block'?'none':'block'; });
+    window.addEventListener('click', () => mainMenu.style.display='none');
+
+    // Section switcher
+    function showSection(id) { document.querySelectorAll('section').forEach(s=>s.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); mainMenu.style.display='none'; }
+    document.querySelectorAll('#main-menu a').forEach(a=>{ a.addEventListener('click', e=>{ e.preventDefault(); showSection(a.getAttribute('data-target')); }); });
+
+    // ORCID Connect redirect
+    const CLIENT_ID    = "APP-xxx";
+    const REDIRECT_URI = "https://b8ecd6d38c5a.ngrok.app/callback";
+    document.getElementById('connect-orcid').addEventListener('click', () => {
+      const authUrl = [
+        "https://orcid.org/oauth/authorize",
+        `?client_id=${CLIENT_ID}`,
+        "&response_type=code",
+        "&scope=/authenticate",
+        `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`
+      ].join('');
+      window.location.href = authUrl;
+    });
+
+    // Show default
+    showSection('profile');
+  </script>
+</body>
+</html>

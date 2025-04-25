@@ -4,8 +4,8 @@ const path = require('path');  // Import path module for serving static files
 const app = express();
 
 // Your ORCID client details
-const CLIENT_ID = 'xx';  // Replace with your ORCID Client ID
-const CLIENT_SECRET = 'xx';  // Replace with your ORCID Client Secret
+const CLIENT_ID = 'APP-xxx';  // Replace with your ORCID Client ID
+const CLIENT_SECRET = 'xxx';  // Replace with your ORCID Client Secret
 const REDIRECT_URI = 'https://b8ecd6d38c5a.ngrok.app/callback';  // Replace with your Redirect URI
 
 // Serve static files (like index.html) from the 'public' folder
@@ -39,7 +39,7 @@ app.get('/callback', async (req, res) => {
 
         // You can store the token for future use or make further API calls
         // Example: fetch the user's ORCID profile
-        const orcidProfile = await axios.get('https://api.orcid.org/v3.0/xx', {
+        const orcidProfile = await axios.get('https://api.orcid.org/v3.0/xxx', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
