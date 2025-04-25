@@ -52,7 +52,11 @@
     header {
       background: #0084bd;
       box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      position: relative; z-index: 20;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
     }
     header .container {
       display: flex; align-items: center;
@@ -76,15 +80,14 @@
 
     /* 6. Hero */
     .hero {
-  text-align: right;
-  direction: rtl;
-  padding: 150px 40px;
-  min-height: 90vh;
-  background: linear-gradient(to bottom right, #004d76, #279dd3); /* New gradient */
-  color: #fff;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-}
-
+      text-align: right;
+      direction: rtl;
+      padding: 250px 40px 150px; /* Adjusted top padding */
+      min-height: 90vh;
+      background: linear-gradient(to bottom right, #004d76, #279dd3);
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
     .hero h1, .hero p, .hero .btn {
       opacity: 0; transform: translateX(50%);
       animation: fadeInFromRight 0.8s ease-out forwards;
@@ -93,14 +96,14 @@
     .hero p  { animation-delay: 0.7s; font-size: 20px; margin-bottom: 30px; }
     .hero .btn {
       animation-delay: 0.9s;
-      background: #0084bd; color: #fff;
+      background: #ffffff; color: #0084bd;
       padding: 15px 30px; border-radius: 5px;
       text-decoration: none; font-size: 18px;
       box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
       transition: background 0.2s, transform 0.1s;
     }
     .hero .btn:hover, .hero .btn:focus {
-      background: #006a9e; transform: translateY(-2px);
+      background: #d4d4d5; transform: translateY(-2px);
       cursor: pointer;
     }
 
