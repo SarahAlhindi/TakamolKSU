@@ -4,256 +4,326 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Takamoul</title>
+  <!-- Load Font Awesome for feature icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
   <style>
-    /* 1. Load your custom font */
+    /* 1. Custom font */
     @font-face {
       font-family: 'GE Dinar';
       src: url('./fonts/GE-Dinar-One-Medium.otf') format('opentype');
-      font-weight: normal;
-      font-style: normal;
     }
 
-    /* 2. Reset & global styles */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    /* 2. Reset & base */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'GE Dinar', sans-serif;
-      background-color: #fff;
+      background: #fff;
       color: #333;
       line-height: 1.6;
-    }
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
+      overflow-x: hidden;
     }
 
-    /* 3. Header */
+    /* 3. Animations */
+    @keyframes slideInFromRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to   { transform: translateX(0);   opacity: 0.5; }
+    }
+    @keyframes fadeInFromRight {
+      from { transform: translateX(50%); opacity: 0; }
+      to   { transform: translateX(0);   opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 4. Side image */
+    .side-image {
+      position: absolute; top: 120px; left: 250px;
+      width: 290px; opacity: 0;
+      animation: slideInFromRight 1s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+
+    /* 5. Header */
     header {
-      background-color: #0084bd;
-      color: #fff;
-      padding: 0px 0;
+      background: #0084bd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      position: relative; z-index: 20;
     }
     header .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center;
+      padding: 0 20px; direction: ltr;
     }
-    header h2 {
-      font-size: 24px;
-      display: none; /* Hide "Takamoul" text */
+    .ksu-logo { height: 60px; margin-right: 20px; }
+    .header-nav {
+      flex: 1; display: flex; justify-content: flex-end; margin-right: 20px;
     }
-    header img {
-      height: 100px; /* Adjust logo size */
+    .header-nav ul {
+      display: flex; list-style: none; gap: 50px;
     }
-    nav ul {
-      list-style: none;
-      display: flex;
+    .header-nav a {
+      color: #fff; text-decoration: none; font-weight: bold;
+      padding: 8px 12px; border-radius: 4px;
+      transition: background 0.2s;
     }
-    nav li {
-      margin-left: 20px;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-    }
+    .header-nav a:hover,
+    .header-nav a:focus { background: #006a9e; cursor: pointer; }
+    .takamoul-logo { height: 90px; margin-left: 20px; }
 
-    /* 4. Hero Section */
+    /* 6. Hero */
     .hero {
-      position: relative;
-      text-align: center;
-      padding: 100px 20px;
-      color: #fff;
+      text-align: right; direction: rtl;
+      padding: 150px 40px; min-height: 90vh;
+      background: #005a8c; color: #fff;
+    }
+    .hero h1, .hero p, .hero .btn {
+      opacity: 0; transform: translateX(50%);
+      animation: fadeInFromRight 0.8s ease-out forwards;
+    }
+    .hero h1 { animation-delay: 0.5s; font-size: 48px; margin-bottom: 20px; }
+    .hero p  { animation-delay: 0.7s; font-size: 20px; margin-bottom: 30px; }
+    .hero .btn {
+      animation-delay: 0.9s;
+      background: #0084bd; color: #fff;
+      padding: 15px 30px; border-radius: 5px;
+      text-decoration: none; font-size: 18px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+      transition: background 0.2s, transform 0.1s;
+    }
+    .hero .btn:hover, .hero .btn:focus {
+      background: #006a9e; transform: translateY(-2px);
+      cursor: pointer;
     }
 
-    /* Shield-shaped background on the left */
-    .hero::before {
+    /* 7. Spacer */
+    .spacer { width: 100%; height: 110px; background: #fff; }
+
+    /* 8. Vision/Mission/Goals */
+    .vision-section {
+      padding: 60px 20px; background: #ffffff;
+      text-align: center;
+    }
+    .vision-list {
+      display: flex;
+      flex-direction: column;
+      gap: 150px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .vision-item {
+      opacity: 0; transform: translateY(30px);
+    }
+    .vision-item.animate {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    .vision-item:nth-child(1).animate { animation-delay: 0.2s; }
+    .vision-item:nth-child(2).animate { animation-delay: 0.4s; }
+    .vision-item:nth-child(3).animate { animation-delay: 0.6s; }
+
+    .vision-item h2 {
+      position: relative; display: inline-block;
+      font-size: 40px; color: #0084bd;
+      margin: 5px 0 5px; padding: 0 20px;
+    }
+    .vision-item h2::before,
+    .vision-item h2::after {
       content: '';
-      position: absolute;
-      top: 50; /* Adjust top position */
-      left: 20; /* Position it to the left */
-      width: 20%; /* You can control the width of the shield here */
-      height: 20vh; /* Control the height of the shield, 80% of the viewport height */
-      background-image: url('images/King-Saud-University.jpg'); /* Background image */
-      background-size: cover;
-      background-position: center;
-      clip-path: polygon(0% 0%, 100% 0%, 50% 80%, 0% 100%, 0% 50%); /* Shield shape */
-      z-index: -1;
-      opacity: 0.7; /* Adjust opacity for the shadow effect */
-      box-shadow: inset 0 0 100px rgba(0, 132, 189, 0.7); /* Blue shadow */
+      position: absolute; top: 50%;
+      width: 40vw;
+      height: 2px;
+      background: #ccc;
+    }
+    .vision-item h2::before {
+      right: 100%; margin-right: 20px;
+    }
+    .vision-item h2::after {
+      left: 100%; margin-left: 20px;
+    }
+    .vision-item p {
+      font-size: 16px; line-height: 1.6; color: #333;
     }
 
-    .hero h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
-    .hero p {
-      font-size: 20px;
-      margin-bottom: 30px;
-    }
-    .btn {
-      display: inline-block;
-      background-color: #0084bd;
-      color: #fff;
-      padding: 15px 30px;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 18px;
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4); /* Add shadow for button */
+    /* 9. Spacer before features */
+    .section-spacer {
+      width: 100%;
+      height: 160px;
+      background: #fff;
     }
 
-    /* 5. Features */
+    /* 10. Features */
     .features {
-      padding: 50px 0;
+      padding: 60px 20px;
+      background: #f3f2f2;
     }
-    .features .grid {
-      display: grid;
+    .features .feature-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; gap: 40px;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
     }
-    .card {
-      border: 1px solid #ddd;
+    .features .feature-card {
+      background: #fff;
+      padding: 30px 20px;
       border-radius: 8px;
-      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       opacity: 0;
       transform: translateY(30px);
-      animation: fadeInUp 0.8s forwards;
     }
-    .card img {
-      max-width: 80px;
-      margin-bottom: 15px;
+    .features .feature-card.animate {
+      animation: fadeInUp 0.8s ease-out forwards;
     }
-    .card h3 {
-      margin-bottom: 10px;
-      font-size: 22px;
+    .features .feature-card:nth-child(1).animate { animation-delay: 0.2s; }
+    .features .feature-card:nth-child(2).animate { animation-delay: 0.4s; }
+    .features .feature-card:nth-child(3).animate { animation-delay: 0.6s; }
+    .features .feature-card:nth-child(4).animate { animation-delay: 0.8s; }
+
+    .features .feature-card .icon {
+      font-size: 50px; color: #005a8c; margin-bottom: 16px;
+    }
+    .features .feature-card h3 {
+      font-size: 22px; color: #0084bd; margin-bottom: 10px;
+    }
+    .features .feature-card p {
+      font-size: 16px; line-height: 1.5; color: #333;
     }
 
-    /* 6. Motion for Cards */
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* 7. Mission, Vision, and Motions */
-    .section-title {
-      text-align: center;
-      font-size: 36px;
-      margin-bottom: 20px;
-      color: #0084bd;
-    }
-    .section-content {
-      text-align: center;
-      font-size: 18px;
-      margin-bottom: 50px;
-    }
-    .motion-vision-section {
-      padding: 50px 20px;
-    }
-    .motion-vision-section div {
-      margin-bottom: 30px;
-    }
-
-    /* 8. Footer */
+    /* 11. Footer */
     footer {
-      background-color: #0084bd;
+      background: #0084bd;
       color: #fff;
-      padding: 20px 0;
       text-align: center;
+      padding: 30px 0;
+      border-top-left-radius: 100px;
     }
     footer p {
-      font-size: 14px;
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    footer .social-icons {
+      margin: 10px 0;
+    }
+    footer .social-icons a {
+      color: #fff;
+      margin: 0 10px;
+      font-size: 24px;
+      transition: color 0.3s;
+    }
+    footer .social-icons a:hover {
+      color: #d1d1d1;
     }
   </style>
 </head>
+
 <body>
 
+  <!-- Side image -->
+  <img src="images/ksu image.png" alt="KSU Side Image" class="side-image">
+
+  <!-- Header -->
   <header>
     <div class="container">
-      <h2>Takamoul</h2> <!-- This is hidden now -->
-      <img src="images/Takamoul Logo.png" alt="Takamoul Logo"> <!-- Display logo -->
-      <nav>
+      <img src="images/ksu logo.png" alt="KSU Logo" class="ksu-logo">
+      <nav class="header-nav">
         <ul>
-          <li><a href="#">الرئيسية</a></li>
-          <li><a href="#">حول</a></li>
-          <li><a href="#">اتصل بنا</a></li>
           <li><a href="#">تسجيل الدخول</a></li>
+          <li><a href="#">الرئيسية</a></li>
         </ul>
       </nav>
+      <img src="images/Takamoul Logo.png" alt="Takamoul Logo" class="takamoul-logo">
     </div>
   </header>
 
+  <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <h1>منصة Takamoul</h1>
+      <h1>منصة تكامل</h1>
       <p>منصة موحدة لرفع كفاءة إدارة الأداء وربط حسابات الجامعة مع ORCID</p>
       <a href="#" class="btn">تسجيل الدخول</a>
     </div>
   </section>
 
-  <!-- Mission, Vision, and Motions Sections -->
-  <section class="motion-vision-section">
-    <div class="container">
-      <h2 class="section-title">رؤيتنا</h2>
-      <p class="section-content">أن نصبح المنصة الرائدة في تحسين الأداء الجامعي وربط البيانات الأكاديمية العالمية للباحثين والطلاب.</p>
-    </div>
+  <!-- Spacer -->
+  <div class="spacer"></div>
 
-    <div class="container">
-      <h2 class="section-title">مهمتنا</h2>
-      <p class="section-content">تمكين أعضاء هيئة التدريس، الطلاب، والموظفين من تعزيز الأداء الأكاديمي من خلال استخدام أدوات فعالة ومترابطة مع معايير عالمية مثل ORCID.</p>
-    </div>
-
-    <div class="container">
-      <h2 class="section-title">أهدافنا</h2>
-      <p class="section-content">تحقيق تكامل بين التعليم، البحث العلمي، والإدارة لتحسين مستوى الأداء الأكاديمي والإداري في الجامعات.</p>
+  <!-- Vision / Mission / Goals -->
+  <section class="vision-section">
+    <div class="vision-list">
+      <div class="vision-item">
+        <h2>رؤيتنا</h2>
+        <p>أن نصبح المنصة الرائدة في تحسين الأداء الجامعي وربط البيانات الأكاديمية العالمية للباحثين والطلاب.</p>
+      </div>
+      <div class="vision-item">
+        <h2>مهمتنا</h2>
+        <p>تمكين أعضاء هيئة التدريس والطلاب والموظفين من تعزيز الأداء الأكاديمي من خلال أدوات فعالة ومترابطة مع معايير عالمية مثل ORCID.</p>
+      </div>
+      <div class="vision-item">
+        <h2>أهدافنا</h2>
+        <p>تحقيق تكامل بين التعليم والبحث والإدارة لتحسين الأداء الأكاديمي والإداري في الجامعات.</p>
+      </div>
     </div>
   </section>
 
+  <!-- Spacer before features -->
+  <div class="section-spacer"></div>
+
+  <!-- Features -->
   <section class="features">
-    <div class="container grid">
-      <div class="card">
-        <img src="faculty-icon.png" alt="عضو هيئة تدريس">
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon"><i class="fa-solid fa-chalkboard-teacher"></i></div>
         <h3>عضو هيئة تدريس</h3>
         <p>عرض الملف الأكاديمي وربط ORCID</p>
       </div>
-      <div class="card">
-        <img src="student-icon.png" alt="طالب/خريج">
+      <div class="feature-card">
+        <div class="icon"><i class="fa-solid fa-user-graduate"></i></div>
         <h3>طالب / خريج</h3>
-        <p>عرض البيانات الأكاديمة وتوثيق المشاركات</p>
+        <p>عرض البيانات الأكاديمية وتوثيق المشاركات</p>
       </div>
-      <div class="card">
-        <img src="admin-icon.png" alt="موظف إداري">
+      <div class="feature-card">
+        <div class="icon"><i class="fa-solid fa-user-tie"></i></div>
         <h3>موظف إداري</h3>
         <p>إدارة المهام والأنشطة الإدارية</p>
       </div>
-      <div class="card">
-        <img src="sysadmin-icon.png" alt="مسؤول النظام">
+      <div class="feature-card">
+        <div class="icon"><i class="fa-solid fa-shield-alt"></i></div>
         <h3>مسؤول النظام</h3>
         <p>إدارة المستخدمين والأذونات وإنشاء التقارير</p>
       </div>
     </div>
   </section>
 
+  <!-- Spacer after Features -->
+  <div class="section-spacer"></div>
+
+  <!-- Footer -->
   <footer>
-    <div class="container">
-      <p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p>
+    <p>تواصل معنا</p>
+    <div class="social-icons">
+      <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
     </div>
+    <p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p>
   </footer>
 
+  <!-- Script -->
   <script>
-    // Basic JS hook (future interactivity)
-    console.log('Takamoul index page loaded');
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      document.querySelectorAll('.vision-item, .features .feature-card').forEach(el => {
+        observer.observe(el);
+      });
+    });
   </script>
 
 </body>
