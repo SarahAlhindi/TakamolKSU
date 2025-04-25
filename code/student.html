@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>طالب - Takamoul</title>
+  <style>
+    /* 1. Load your custom font */
+    @font-face {
+      font-family: 'GE Dinar';
+      src: url('./fonts/GE-Dinar-One-Medium.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    /* 2. Reset & global styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'GE Dinar', sans-serif;
+      background-color: #fff;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* 3. Header */
+    header {
+      background-color: #0084bd;
+      color: #fff;
+      padding: 20px 0;
+    }
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h2 {
+      font-size: 24px;
+      display: none; /* Hide "Takamoul" text */
+    }
+    header img {
+      height: 80px; /* Adjust logo size */
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+    }
+    nav li {
+      margin-left: 20px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* 4. Main Section */
+    .section {
+      padding: 50px 0;
+    }
+
+    .section h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .card p {
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #0084bd;
+      color: #fff;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+
+    /* 5. Footer */
+    footer {
+      background-color: #0084bd;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+    footer p {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h2>Takamoul</h2> <!-- This is hidden now -->
+      <img src="images/Takamoul Logo.png" alt="Takamoul Logo"> <!-- Display logo -->
+      <nav>
+        <ul>
+          <li><a href="#">الرئيسية</a></li>
+          <li><a href="#">حول</a></li>
+          <li><a href="#">اتصل بنا</a></li>
+          <li><a href="#">تسجيل الدخول</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h2>بيانات الطالب</h2>
+      <div class="card">
+        <h3>عرض البيانات الأكاديمية</h3>
+        <p>الاسم: [الاسم]</p>
+        <p>الرقم الجامعي: [الرقم]</p>
+        <p>التخصص: [التخصص]</p>
+        <p>الكلية: [الكلية]</p>
+        <p>سنة التخرج: [السنة]</p>
+      </div>
+
+      <div class="card">
+        <h3>ربط ORCID</h3>
+        <p>الربط مع ORCID اختياري حسب التخصص والدرجة العلمية</p>
+        <p id="orcid-link">ربط ORCID</p>
+        
+        <p>حالة الربط: <span id="orcid-status">لم يتم الربط بعد</span></p>
+        <a href="#" class="btn" id="orcid-btn">جلب أحدث البيانات من ORCID</a>
+      </div>
+
+      <div class="card">
+        <h3>المشاركات</h3>
+        <p>توثيق المشاركة في الأبحاث، المشاريع، المؤتمرات، والمبادرات الطلابية</p>
+      </div>
+
+      <div class="card">
+        <h3>الدورات التدريبية</h3>
+        <p>فع شهادات حضور الدورات مع تفاصيلها</p>
+      </div>
+
+      <div class="card">
+        <h3>الإشراف</h3>
+        <p>ربط الطالب بعضو هيئة تدريس أشرف على مشروع أو بحث</p>
+      </div>
+
+      <div class="card">
+        <h3>تقرير الإنجاز</h3>
+        <p>عرض إحصائي (عدد المشاركات، عدد الدورات، عدد الأبحاث المشترك بها)</p>
+      </div>
+
+      <div class="card">
+        <h3>إرفاق مستند</h3>
+        <p>رفع مستندات داعمة مثل الشهادات أو ملفات المشاريع</p>
+      </div>
+
+      <div class="card">
+        <h3>الرسائل والإشعارات</h3>
+        <p>تنبيهات بالأنشطة القادمة أو حالة اعتماد المشاركات</p>
+      </div>
+
+      <div class="card">
+        <h3>ملف الباحث الناشئ</h3>
+        <p>عرض بصري يُشجع الطالب على إنشاء سجل بحثي مهني مبكر باستخدام ORCID</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p>
+    </div>
+  </footer>
+
+  <script>
+    // Basic JS for functionality (future updates)
+    console.log('Student page loaded');
+
+    // Redirect to ORCID authorization when the button is clicked
+    document.getElementById("orcid-btn").addEventListener("click", function() {
+        // Define the ORCID authorization URL
+        const clientId = "xx"; // Replace with your ORCID Client ID
+        const redirectUri = "https://b8ecd6d38c5a.ngrok.app/callback"; // Replace with your redirect URI
+        const orcidUrl = `https://orcid.org/oauth/authorize?client_id=${clientId}&response_type=code&scope=/read-limited&redirect_uri=${redirectUri}`;
+
+        // Redirect the user to the ORCID authorization page
+        window.location.href = orcidUrl;
+    });
+  </script>
+
+</body>
+</html>
