@@ -35,7 +35,7 @@
     header {
       background-color: #0084bd;
       color: #fff;
-      padding: 20px 0;
+      padding: 0px 0;
     }
     header .container {
       display: flex;
@@ -47,7 +47,7 @@
       display: none; /* Hide "Takamoul" text */
     }
     header img {
-      height: 80px; /* Adjust logo size */
+      height: 100px; /* Adjust logo size */
     }
     nav ul {
       list-style: none;
@@ -64,9 +64,29 @@
 
     /* 4. Hero Section */
     .hero {
+      position: relative;
       text-align: center;
       padding: 100px 20px;
+      color: #fff;
     }
+
+    /* Shield-shaped background on the left */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50; /* Adjust top position */
+      left: 20; /* Position it to the left */
+      width: 20%; /* You can control the width of the shield here */
+      height: 20vh; /* Control the height of the shield, 80% of the viewport height */
+      background-image: url('images/King-Saud-University.jpg'); /* Background image */
+      background-size: cover;
+      background-position: center;
+      clip-path: polygon(0% 0%, 100% 0%, 50% 80%, 0% 100%, 0% 50%); /* Shield shape */
+      z-index: -1;
+      opacity: 0.7; /* Adjust opacity for the shadow effect */
+      box-shadow: inset 0 0 100px rgba(0, 132, 189, 0.7); /* Blue shadow */
+    }
+
     .hero h1 {
       font-size: 48px;
       margin-bottom: 20px;
@@ -83,6 +103,7 @@
       text-decoration: none;
       border-radius: 5px;
       font-size: 18px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4); /* Add shadow for button */
     }
 
     /* 5. Features */
@@ -100,6 +121,9 @@
       padding: 20px;
       text-align: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
     }
     .card img {
       max-width: 80px;
@@ -110,7 +134,38 @@
       font-size: 22px;
     }
 
-    /* 6. Footer */
+    /* 6. Motion for Cards */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 7. Mission, Vision, and Motions */
+    .section-title {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #0084bd;
+    }
+    .section-content {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 50px;
+    }
+    .motion-vision-section {
+      padding: 50px 20px;
+    }
+    .motion-vision-section div {
+      margin-bottom: 30px;
+    }
+
+    /* 8. Footer */
     footer {
       background-color: #0084bd;
       color: #fff;
@@ -147,6 +202,24 @@
     </div>
   </section>
 
+  <!-- Mission, Vision, and Motions Sections -->
+  <section class="motion-vision-section">
+    <div class="container">
+      <h2 class="section-title">رؤيتنا</h2>
+      <p class="section-content">أن نصبح المنصة الرائدة في تحسين الأداء الجامعي وربط البيانات الأكاديمية العالمية للباحثين والطلاب.</p>
+    </div>
+
+    <div class="container">
+      <h2 class="section-title">مهمتنا</h2>
+      <p class="section-content">تمكين أعضاء هيئة التدريس، الطلاب، والموظفين من تعزيز الأداء الأكاديمي من خلال استخدام أدوات فعالة ومترابطة مع معايير عالمية مثل ORCID.</p>
+    </div>
+
+    <div class="container">
+      <h2 class="section-title">أهدافنا</h2>
+      <p class="section-content">تحقيق تكامل بين التعليم، البحث العلمي، والإدارة لتحسين مستوى الأداء الأكاديمي والإداري في الجامعات.</p>
+    </div>
+  </section>
+
   <section class="features">
     <div class="container grid">
       <div class="card">
@@ -157,7 +230,7 @@
       <div class="card">
         <img src="student-icon.png" alt="طالب/خريج">
         <h3>طالب / خريج</h3>
-        <p>عرض البيانات الأكاديمية وتوثيق المشاركات</p>
+        <p>عرض البيانات الأكاديمة وتوثيق المشاركات</p>
       </div>
       <div class="card">
         <img src="admin-icon.png" alt="موظف إداري">
