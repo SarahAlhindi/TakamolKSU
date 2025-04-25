@@ -79,6 +79,7 @@
       text-align: right; direction: rtl;
       padding: 150px 40px; min-height: 90vh;
       background: #005a8c; color: #fff;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
     .hero h1, .hero p, .hero .btn {
       opacity: 0; transform: translateX(50%);
@@ -102,7 +103,7 @@
     /* 7. Spacer */
     .spacer { width: 100%; height: 110px; background: #fff; }
 
-    /* 8. Vision/Mission/Goals */
+    /* 8. Vision Section */
     .vision-section {
       padding: 60px 20px; background: #ffffff;
       text-align: center;
@@ -137,12 +138,8 @@
       height: 2px;
       background: #ccc;
     }
-    .vision-item h2::before {
-      right: 100%; margin-right: 20px;
-    }
-    .vision-item h2::after {
-      left: 100%; margin-left: 20px;
-    }
+    .vision-item h2::before { right: 100%; margin-right: 20px; }
+    .vision-item h2::after { left: 100%; margin-left: 20px; }
     .vision-item p {
       font-size: 16px; line-height: 1.6; color: #333;
     }
@@ -198,6 +195,7 @@
       text-align: center;
       padding: 30px 0;
       border-top-left-radius: 100px;
+      box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
     }
     footer p {
       font-size: 16px;
@@ -249,7 +247,7 @@
   <!-- Spacer -->
   <div class="spacer"></div>
 
-  <!-- Vision / Mission / Goals -->
+  <!-- Vision Section -->
   <section class="vision-section">
     <div class="vision-list">
       <div class="vision-item">
@@ -267,7 +265,7 @@
     </div>
   </section>
 
-  <!-- Spacer before features -->
+  <!-- Spacer -->
   <div class="section-spacer"></div>
 
   <!-- Features -->
@@ -296,20 +294,20 @@
     </div>
   </section>
 
-  <!-- Spacer after Features -->
+  <!-- Spacer -->
   <div class="section-spacer"></div>
 
   <!-- Footer -->
   <footer>
     <p>تواصل معنا</p>
     <div class="social-icons">
-      <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-      <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
     </div>
     <p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p>
   </footer>
 
-  <!-- Script -->
+  <!-- Intersection Observer Animations -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const observer = new IntersectionObserver((entries, obs) => {
