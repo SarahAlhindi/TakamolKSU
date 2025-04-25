@@ -76,11 +76,15 @@
 
     /* 6. Hero */
     .hero {
-      text-align: right; direction: rtl;
-      padding: 150px 40px; min-height: 90vh;
-      background: #005a8c; color: #fff;
-      box-shadow: 0 500px 500px rgba(0, 0, 0, 0.8);
-    }
+  text-align: right;
+  direction: rtl;
+  padding: 150px 40px;
+  min-height: 90vh;
+  background: linear-gradient(to bottom right, #004d76, #279dd3); /* New gradient */
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
     .hero h1, .hero p, .hero .btn {
       opacity: 0; transform: translateX(50%);
       animation: fadeInFromRight 0.8s ease-out forwards;
