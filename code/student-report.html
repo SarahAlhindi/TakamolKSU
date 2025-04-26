@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تقارير الإنجاز - Takamoul</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    @font-face { font-family: 'GE Dinar'; src: url('./fonts/GE-Dinar-One-Medium.otf') format('opentype'); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'GE Dinar', sans-serif; background: #f5f7fa; color: #333; line-height: 1.6; overflow-x: hidden; }
+    .container { width: 90%; max-width: 1200px; margin: auto; }
+
+    header { background: #0084bd; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    header .container { display: flex; align-items: center; padding: 10px 20px; justify-content: space-between; direction: rtl; }
+    .ksu-logo { height: 60px; }
+    .takamoul-logo { height: 80px; }
+    nav { background: #006a9e; padding: 10px 0; }
+    nav .container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+    .nav-link { color: white; text-decoration: none; font-weight: bold; padding: 8px 12px; border-radius: 6px; transition: 0.3s; }
+    .nav-link:hover { background: #00557e; color: #d1e7ff; }
+
+    .section { padding: 40px 0; }
+    .greeting { font-size: 1.8rem; margin-bottom: 20px; color: #0084bd; text-align: right; }
+    .instructions { font-size: 1rem; margin-bottom: 30px; text-align: right; color: #555; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+    .info-card {
+      background: #fff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      padding: 20px; text-align: center; transition: 0.3s; animation: fadeInUp 0.8s forwards;
+    }
+    .info-card:hover { transform: translateY(-5px); }
+    .info-card h4 { color: #0084bd; margin-bottom: 10px; }
+    .info-card p { font-size: 15px; margin-bottom: 8px; }
+    .progress-bar {
+      background: #eee;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 20px;
+      margin-top: 10px;
+    }
+    .progress { height: 100%; background: #28a745; text-align: center; color: white; font-size: 14px; }
+
+    footer { background: #0084bd; color: white; text-align: center; padding: 30px 0; margin-top: 40px; border-top-left-radius: 100px; }
+    footer p { font-size: 16px; }
+
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <img src="images/Takamoul Logo.png" class="takamoul-logo">
+    <img src="images/ksu logo.png" class="ksu-logo">
+  </div>
+</header>
+
+<nav>
+    <div class="container">
+      <a href="student.html" class="nav-link">بياناتي</a>
+      <a href="student-orcid.html" class="nav-link">ربط ORCID</a>
+      <a href="student-participation.html" class="nav-link">مشاركاتي</a>
+      <a href="student-supervision.html" class="nav-link">الإشراف</a>
+      <a href="student-report.html" class="nav-link">تقرير الإنجاز</a>
+      <a href="student-profile.html" class="nav-link">ملف الباحث الناشئ</a>
+    </div>
+  </nav>
+  
+<section class="section container">
+  <div class="greeting">تقارير الإنجاز</div>
+  <div class="instructions">تابع تقدمك الأكاديمي والمهني.</div>
+
+  <div class="cards-grid">
+    <div class="info-card">
+      <h4>المشاركات</h4>
+      <p>عدد المشاركات: 5</p>
+    </div>
+
+    <div class="info-card">
+      <h4>الدورات التدريبية</h4>
+      <p>عدد الدورات المكتملة: 8</p>
+    </div>
+
+    <div class="info-card">
+      <h4>التقدم العام</h4>
+      <div class="progress-bar">
+        <div class="progress" style="width: 75%;">75%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><p>&copy; 2025 جامعة الملك سعود – جميع الحقوق محفوظة</p></footer>
+
+</body>
+</html>
