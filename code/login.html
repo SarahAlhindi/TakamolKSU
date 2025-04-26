@@ -4,228 +4,272 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>تسجيل الدخول – Takamoul</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
   <style>
     @font-face {
       font-family: 'GE Dinar';
       src: url('./fonts/GE-Dinar-One-Medium.otf') format('opentype');
     }
-    * { box-sizing:border-box; margin:0; padding:0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family:'GE Dinar',sans-serif;
-      background:#f5f7fa;
-      color:#333;
-      transition:background-color .3s ease;
+      font-family: 'GE Dinar', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      overflow-x: hidden;
     }
-    .container {
-      width:90%; max-width:1200px; margin:0 auto;
-    }
+
+    /* Header */
     header {
-      background:#0084bd; color:#fff; padding:15px 0;
+      background: #0084bd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
     }
     header .container {
-      display:flex; align-items:center; justify-content:space-between;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      direction: ltr;
     }
-    header img { height:60px; }
-    nav ul {
-      list-style:none; display:flex;
+    .ksu-logo { height: 60px; margin-right: 20px; }
+    .header-nav {
+      flex: 1; display: flex; justify-content: flex-end; margin-right: 20px;
     }
-    nav li { margin-left:20px; }
-    nav a {
-      color:#fff; text-decoration:none; font-weight:bold;
+    .header-nav ul {
+      display: flex; list-style: none; gap: 50px;
     }
+    .header-nav a {
+      color: #fff; text-decoration: none; font-weight: bold;
+      padding: 8px 12px; border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .header-nav a:hover { background: #006a9e; cursor: pointer; }
+    .takamoul-logo { height: 90px; margin-left: 20px; }
 
+    /* Main Section */
     .hero {
-      text-align:center; padding:40px 20px;
+      padding: 200px 20px 50px;
+      text-align: center;
+      background: linear-gradient(to bottom right, #004d76, #279dd3);
+      color: #fff;
+      min-height: 60vh;
     }
-    .hero h1 { font-size:2.5rem; margin-bottom:10px; }
-    .hero p  { font-size:1.2rem; }
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+      animation: fadeInUp 1s ease-out;
+    }
+    .hero p {
+      font-size: 20px;
+      animation: fadeInUp 1.2s ease-out;
+    }
 
-    /* Feature cards */
+    /* Role Cards */
     .features {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-      gap:20px;
-      padding:20px 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      margin: 50px auto;
+      width: 90%;
+      max-width: 1200px;
+      text-align: center;
     }
-    .features .card {
-      background:#fff;
-      border:2px solid transparent;
-      border-radius:8px;
-      padding:20px;
-      text-align:center;
-      box-shadow:0 2px 8px rgba(0,0,0,0.1);
-      transition:all .3s ease;
-      cursor:pointer;
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      cursor: pointer;
     }
-    .features .card:hover {
-      transform:translateY(-5px);
-      box-shadow:0 4px 15px rgba(0,0,0,0.15);
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
-    .features .card.selected {
-      border-color:#0084bd;
+    .card i {
+      font-size: 50px;
+      color: #005a8c;
+      margin-bottom: 15px;
     }
-    .features img {
-      width:60px; height:60px; margin-bottom:15px;
-      transition:transform .3s ease;
+    .card h3 {
+      font-size: 22px;
+      color: #0084bd;
+      margin-bottom: 8px;
     }
-    .features .card:hover img {
-      transform:scale(1.1);
+    .card p {
+      font-size: 16px;
+      color: #666;
     }
-    .features h3 {
-      font-size:1.2rem; margin-bottom:8px;
-    }
-    .features p {
-      font-size:0.95rem; color:#666;
+    .card.selected {
+      border: 2px solid #0084bd;
     }
 
+    /* Login Form */
     .login-form {
-      text-align:center; padding:30px 0;
-    }
-    .login-form form {
-      max-width:400px; margin:0 auto;
-      background:#fff; padding:20px;
-      border-radius:8px;
-      box-shadow:0 2px 8px rgba(0,0,0,0.1);
-      transition:box-shadow .3s ease;
-    }
-    .login-form form:hover {
-      box-shadow:0 4px 15px rgba(0,0,0,0.15);
+      margin: 40px auto;
+      max-width: 400px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     .login-form input {
-      width:100%; padding:12px; margin-bottom:15px;
-      border:1px solid #ddd; border-radius:5px;
-      font-size:1rem;
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-family: 'GE Dinar', sans-serif;
+      font-size: 16px;
     }
     .login-form button {
-      width:100%; padding:12px;
-      font-size:1.1rem; background:#0084bd;
-      color:#fff; border:none; border-radius:5px;
-      cursor:pointer; transition:background .3s ease;
+      width: 100%;
+      background: #0084bd;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.3s;
     }
-    .login-form button:disabled {
-      background:#aaa; cursor:not-allowed;
+    .login-form button:hover {
+      background: #005a8c;
     }
-    .login-form button:hover:not(:disabled) {
-      background:#005f7f;
+    .signup-link {
+      margin-top: 15px;
+      font-size: 14px;
     }
-    .signup {
-      margin-top:15px; font-size:0.9rem;
+    .signup-link a {
+      color: #0084bd;
+      font-weight: bold;
+      text-decoration: none;
     }
-    .signup a {
-      color:#0084bd; text-decoration:none; font-weight:bold;
+    .signup-link a:hover {
+      text-decoration: underline;
     }
-    .signup a:hover { text-decoration:underline; }
 
+    /* Footer */
     footer {
-      background:#0084bd; color:#fff; text-align:center;
-      padding:15px 0; margin-top:30px;
+      background: #0084bd;
+      color: #fff;
+      text-align: center;
+      padding: 30px 0;
+      margin-top: 60px;
+      border-top-left-radius: 100px;
+      box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
     }
-    footer p { font-size:0.9rem; }
 
+    /* Animations */
     @keyframes fadeInUp {
-      from { opacity:0; transform:translateY(20px); }
-      to   { opacity:1; transform:translateY(0); }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
+
 <body>
 
-  <header>
-    <div class="container">
-      <img src="images/TakamoulLogo.png" alt="Takamoul Logo">
-      <nav>
-        <ul>
-          <li><a href="index.html">الرئيسية</a></li>
-          <li><a href="#">حول</a></li>
-          <li><a href="#">اتصل بنا</a></li>
-          <li><a href="login.html">تسجيل الدخول</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<!-- Header -->
+<header>
+  <div class="container">
+    <img src="images/ksu logo.png" alt="KSU Logo" class="ksu-logo">
+    <nav class="header-nav">
+      <ul>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="#">حول</a></li>
+        <li><a href="#">اتصل بنا</a></li>
+        <li><a href="login.html">تسجيل الدخول</a></li>
+      </ul>
+    </nav>
+    <img src="images/Takamoul Logo.png" alt="Takamoul Logo" class="takamoul-logo">
+  </div>
+</header>
 
-  <section class="hero">
-    <div class="container">
-      <h1>تسجيل الدخول</h1>
-      <p>اختر نوع المستخدم ثم أدخل بياناتك</p>
-    </div>
-  </section>
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <h1>تسجيل الدخول</h1>
+    <p>اختر نوع المستخدم ثم أدخل بياناتك</p>
+  </div>
+</section>
 
-  <section class="features container">
-    <div class="card" data-role="faculty">
-      <img src="faculty-icon.png" alt="عضو هيئة تدريس">
-      <h3>عضو هيئة تدريس</h3>
-      <p>عرض الملف الأكاديمي وربط ORCID</p>
-    </div>
-    <div class="card" data-role="student">
-      <img src="student-icon.png" alt="طالب/خريج">
-      <h3>طالب / خريج</h3>
-      <p>عرض البيانات الأكاديمية وتوثيق المشاركات</p>
-    </div>
-    <div class="card" data-role="admin">
-      <img src="admin-icon.png" alt="موظف إداري">
-      <h3>موظف إداري</h3>
-      <p>إدارة المهام والأنشطة الإدارية</p>
-    </div>
-    <div class="card" data-role="sysadmin">
-      <img src="sysadmin-icon.png" alt="مسؤول النظام">
-      <h3>مسؤول النظام</h3>
-      <p>إدارة المستخدمين والأذونات وإنشاء التقارير</p>
-    </div>
-  </section>
+<!-- Role Selection -->
+<section class="features container">
+  <div class="card" data-role="faculty">
+    <i class="fas fa-chalkboard-teacher"></i>
+    <h3>عضو هيئة تدريس</h3>
+    <p>عرض الملف الأكاديمي وربط ORCID</p>
+  </div>
+  <div class="card" data-role="student">
+    <i class="fas fa-user-graduate"></i>
+    <h3>طالب / خريج</h3>
+    <p>عرض البيانات الأكاديمية وتوثيق المشاركات</p>
+  </div>
+  <div class="card" data-role="admin">
+    <i class="fas fa-user-tie"></i>
+    <h3>موظف إداري</h3>
+    <p>إدارة المهام والأنشطة الإدارية</p>
+  </div>
+  <div class="card" data-role="sysadmin">
+    <i class="fas fa-shield-alt"></i>
+    <h3>مسؤول النظام</h3>
+    <p>إدارة المستخدمين والأذونات وإنشاء التقارير</p>
+  </div>
+</section>
 
-  <section class="login-form container">
-    <form id="loginForm">
-      <input type="hidden" id="userRole" name="role">
-      <input type="text" placeholder="اسم المستخدم" id="username" required>
-      <input type="password" placeholder="كلمة المرور" id="password" required>
-      <button type="submit" id="loginBtn" disabled>دخول</button>
-      <div class="signup">
-        ليس لديك حساب؟ <a href="signup.html">انقر هنا</a>
-      </div>
-    </form>
-  </section>
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p>
+<!-- Login Form -->
+<section class="login-form container">
+  <form id="loginForm">
+    <input type="hidden" id="userRole" name="role">
+    <input type="text" placeholder="اسم المستخدم" id="username" required>
+    <input type="password" placeholder="كلمة المرور" id="password" required>
+    <button type="submit" id="loginBtn" disabled>دخول</button>
+    <div class="signup-link">
+      ليس لديك حساب؟ <a href="signup.html">إنشاء حساب</a>
     </div>
-  </footer>
+  </form>
+</section>
 
-  <script>
-    // Role selection logic
-    const cards = document.querySelectorAll('.features .card');
-    const roleInput = document.getElementById('userRole');
-    const loginBtn = document.getElementById('loginBtn');
+<!-- Footer -->
+<footer>
+  <p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p>
+</footer>
 
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        // clear previous
-        cards.forEach(c => c.classList.remove('selected'));
-        // mark this
-        card.classList.add('selected');
-        // store role
-        roleInput.value = card.getAttribute('data-role');
-        // enable button
-        loginBtn.disabled = false;
-      });
+<!-- Script -->
+<script>
+  const cards = document.querySelectorAll('.card');
+  const roleInput = document.getElementById('userRole');
+  const loginBtn = document.getElementById('loginBtn');
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      cards.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      roleInput.value = card.dataset.role;
+      loginBtn.disabled = false;
     });
+  });
 
-    // Form handling
-    document.getElementById('loginForm').addEventListener('submit', e => {
-      e.preventDefault();
-      if (!roleInput.value) {
-        alert('اختر نوع المستخدم أولاً.');
-        return;
-      }
-      const user = document.getElementById('username').value;
-      const pass = document.getElementById('password').value;
-      if (user && pass) {
-        alert(`تم تسجيل الدخول كـ ${roleInput.value}.`);
-        // redirect or AJAX login here...
-      }
-    });
-  </script>
+  document.getElementById('loginForm').addEventListener('submit', e => {
+    e.preventDefault();
+    if (!roleInput.value) {
+      alert('اختر نوع المستخدم أولاً.');
+      return;
+    }
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    if (user && pass) {
+      alert(`تم تسجيل الدخول كـ ${roleInput.value}.`);
+      // You can redirect here after login success
+    }
+  });
+</script>
 
 </body>
 </html>
