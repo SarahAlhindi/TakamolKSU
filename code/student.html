@@ -4,53 +4,89 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>طالب - Takamoul</title>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
   <style>
     @font-face {
       font-family: 'GE Dinar';
       src: url('./fonts/GE-Dinar-One-Medium.otf') format('opentype');
     }
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body { font-family: 'GE Dinar', sans-serif; background:#fff; color:#333; line-height:1.6; }
-    .container { width:90%; max-width:1200px; margin:0 auto; }
-    header { background:#0084bd; color:#fff; padding:20px 0; }
-    header .container { display:flex; align-items:center; justify-content:space-between; }
-    header img { height:80px; }
-    nav ul { list-style:none; display:flex; }
-    nav li { margin-left:20px; }
-    nav a { color:#fff; text-decoration:none; font-weight:bold; }
-
-    .section { padding:50px 0; }
-    .section h2 { font-size:28px; margin-bottom:20px; text-align:center; }
-    .card {
-      border:1px solid #ddd; border-radius:8px; padding:20px;
-      text-align:center; box-shadow:0 2px 5px rgba(0,0,0,0.1);
-      margin-bottom:30px;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'GE Dinar', sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    .card h3 { font-size:22px; margin-bottom:10px; }
-    .card p { font-size:16px; margin-bottom:20px; }
-    .btn {
-      background:#0084bd; color:#fff; padding:15px 30px;
-      border:none; border-radius:5px; font-size:18px; cursor:pointer;
-    }
-    footer { background:#0084bd; color:#fff; padding:20px 0; text-align:center; }
-    footer p { font-size:14px; }
 
-    /* Floating menu button on left */
+    /* Header */
+    header {
+      background: #0084bd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    header .container {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      direction: ltr;
+    }
+    .ksu-logo { height: 60px; margin-right: 20px; }
+    .header-nav {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 20px;
+    }
+    .header-nav ul {
+      display: flex;
+      list-style: none;
+      gap: 50px;
+    }
+    .header-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .header-nav a:hover,
+    .header-nav a:focus {
+      background: #006a9e;
+      cursor: pointer;
+    }
+    .takamoul-logo { height: 90px; margin-left: 20px; }
+
+    /* Spacer after header */
+    .spacer {
+      height: 110px;
+      background: #fff;
+    }
+
+    /* Menu Button */
     .menu-container {
-  position: fixed;
-  top: 140px;    /* tweak this value until it clears the blue header */
-  left: 20px;
-  z-index: 1000;
-}
-.menu-btn {
-  background: #005f8a;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  font-size: 24px;
-  cursor: pointer;
-}
+      position: fixed;
+      top: 160px;
+      left: 20px;
+      z-index: 999;
+    }
+    .menu-btn {
+      background: #005f8a;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 24px;
+      cursor: pointer;
+    }
     .dropdown-menu {
       display: none;
       position: absolute;
@@ -71,193 +107,247 @@
     .dropdown-menu a:last-child { border-bottom: none; }
     .dropdown-menu a:hover { background: #f0f8ff; }
 
-    .hidden { display:none; }
+    /* Sections */
+    .section { padding: 50px 0; }
+    .section h2 { font-size: 28px; margin-bottom: 20px; text-align: center; }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    .card h3 { font-size: 22px; margin-bottom: 10px; }
+    .card p { font-size: 16px; margin-bottom: 20px; }
+    .btn {
+      background: #0084bd;
+      color: #fff;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    footer {
+      background: #0084bd;
+      color: #fff;
+      text-align: center;
+      padding: 30px 0;
+      border-top-left-radius: 100px;
+      box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+    }
+    footer p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    footer .social-icons {
+      margin: 10px 0;
+    }
+    footer .social-icons a {
+      color: #fff;
+      margin: 0 10px;
+      font-size: 24px;
+      transition: color 0.3s;
+    }
+    footer .social-icons a:hover {
+      color: #d1d1d1;
+    }
+
+    /* Hidden Sections */
+    .hidden { display: none; }
   </style>
 </head>
+
 <body>
 
-  
-  <header>
-    <div class="container">
-      <div style="display:flex; align-items:center;">
-        <img src="images/Takamoul Logo.png" alt="Takamoul Logo" style="margin-right:20px;">
-        <nav>
-          <ul>
-            <li><a href="#">الرئيسية</a></li>
-            <li><a href="#">حول</a></li>
-            <li><a href="#">اتصل بنا</a></li>
-            <li><a href="#">تسجيل الدخول</a></li>
-          </ul>
-        </nav>
-      </div>
+<!-- Header -->
+<header>
+  <div class="container">
+    <img src="images/ksu logo.png" alt="KSU Logo" class="ksu-logo">
+    <nav class="header-nav">
+      <ul>
+        <li><a href="#">الرئيسية</a></li>
+        <li><a href="#">حول</a></li>
+        <li><a href="#">اتصل بنا</a></li>
+        <li><a href="#">تسجيل الدخول</a></li>
+      </ul>
+    </nav>
+    <img src="images/Takamoul Logo.png" alt="Takamoul Logo" class="takamoul-logo">
+  </div>
+</header>
+
+<div class="spacer"></div> <!-- Push page content down -->
+
+<!-- Menu -->
+<div class="menu-container">
+  <button class="menu-btn" id="menu-toggle">☰</button>
+  <div class="dropdown-menu" id="main-menu">
+    <a href="#" data-target="academic">البيانات الأكاديمية</a>
+    <a href="#" data-target="participation">المشاركات</a>
+    <a href="#" data-target="courses">الدورات التدريبية</a>
+    <a href="#" data-target="supervision">الإشراف</a>
+    <a href="#" data-target="reports">تقارير الإنجاز</a>
+    <a href="#" data-target="orcid">ربط ORCID</a>
+    <a href="#" data-target="profile">ملف الباحث الناشئ</a>
+  </div>
+</div>
+
+<!-- Sections -->
+<section id="academic" class="section hidden">
+  <div class="container">
+    <h2>البيانات الأكاديمية</h2>
+    <div class="card">
+      <h3>المعلومات الشخصية</h3>
+      <p>الاسم: أحمد بن محمد العليان</p>
+      <p>الرقم الجامعي: 443200556</p>
     </div>
-  </header>
-  <div class="menu-container">
-    <button class="menu-btn" id="menu-toggle">☰</button>
-    <div class="dropdown-menu" id="main-menu">
-      <a href="#" data-target="academic">البيانات الأكاديمية</a>
-      <a href="#" data-target="participation">المشاركات</a>
-      <a href="#" data-target="courses">الدورات التدريبية</a>
-      <a href="#" data-target="supervision">الإشراف</a>
-      <a href="#" data-target="reports">تقارير الإنجاز</a>
-      <a href="#" data-target="orcid">ربط ORCID</a>
-      <a href="#" data-target="profile">ملف الباحث الناشئ</a>
+    <div class="card">
+      <h3>التعليم</h3>
+      <p>الجامعة: جامعة الملك سعود</p>
+      <p>الكلية: كلية الحاسب الآلي ونظم المعلومات</p>
+      <p>التخصص: علوم الحاسب</p>
+      <p>المعدل التراكمي: 4.75/5.0</p>
+      <p>سنة التخرج المتوقعة: 2025</p>
     </div>
   </div>
+</section>
 
-  <!-- ORCID section -->
-  <section id="orcid" class="section hidden">
-    <div class="container">
-      <h2>ربط ORCID</h2>
-      <div class="card">
-        <h3>ربط ORCID</h3>
-        <p>الربط مع ORCID اختياري حسب التخصص والدرجة العلمية</p>
-        <p>حالة الربط: <span id="orcid-status">لم يتم الربط بعد</span></p>
-        <button class="btn" id="orcid-btn">جلب أحدث البيانات من ORCID</button>
-      </div>
+<section id="participation" class="section hidden">
+  <div class="container">
+    <h2>المشاركات</h2>
+    <div class="card">
+      <h3>مؤتمر الأمن السيبراني 2023</h3>
+      <p>الجهة المنظمة: الهيئة السعودية للأمن السيبراني</p>
+      <p>الدور: متحدث</p>
     </div>
-  </section>
-
-  <!-- البيانات الأكاديمية -->
-  <section id="academic" class="section hidden">
-    <div class="container">
-      <h2>البيانات الأكاديمية</h2>
-      <div class="card">
-        <h3>المعلومات الشخصية</h3>
-        <p>الاسم: أحمد بن محمد العليان</p>
-        <p>الرقم الجامعي: 443200556</p>
-      </div>
-      <div class="card">
-        <h3>التعليم</h3>
-        <p>الجامعة: جامعة الملك سعود</p>
-        <p>الكلية: كلية الحاسب الآلي ونظم المعلومات</p>
-        <p>التخصص: علوم الحاسب</p>
-        <p>المعدل التراكمي: 4.75/5.0</p>
-        <p>سنة التخرج المتوقعة: 2025</p>
-      </div>
+    <div class="card">
+      <h3>Big O'</h3>
+      <p>الجامعة: جامعة الملك سعود</p>
+      <p>الدور: منظم</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- المشاركات -->
-  <section id="participation" class="section hidden">
-    <div class="container">
-      <h2>المشاركات</h2>
-      <div class="card">
-        <h3>مؤتمر الأمن السيبراني 2023</h3>
-        <p>الجهة المنظمة: الهيئة السعودية للأمن السيبراني</p>
-        <p>الدور: متحدث</p>
-      </div>
-      <div class="card">
-        <h3>Big O'</h3>
-        <p>الجامعة: جامعة الملك سعود</p>
-        <p>الدور: منظم</p>
-      </div>
+<section id="courses" class="section hidden">
+  <div class="container">
+    <h2>الدورات التدريبية</h2>
+    <div class="card">
+      <h3>دورة الأمن السيبراني المتقدم</h3>
+      <p>الجهة: مركز ذكاء</p>
+      <p>المدة: 40 ساعة (يناير 2024)</p>
     </div>
-  </section>
-
-  <!-- الدورات التدريبية -->
-  <section id="courses" class="section hidden">
-    <div class="container">
-      <h2>الدورات التدريبية</h2>
-      <div class="card">
-        <h3>دورة الأمن السيبراني المتقدم</h3>
-        <p>الجهة: مركز ذكاء</p>
-        <p>المدة: 40 ساعة (يناير 2024)</p>
-      </div>
-      <div class="card">
-        <h3>دورة تطوير تطبيقات الجوال بـ Flutter</h3>
-        <p>الجهة: Coursera</p>
-        <p>المدة: 50 ساعة (مارس 2024)</p>
-      </div>
+    <div class="card">
+      <h3>دورة تطوير تطبيقات الجوال بـ Flutter</h3>
+      <p>الجهة: Coursera</p>
+      <p>المدة: 50 ساعة (مارس 2024)</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- الإشراف -->
-  <section id="supervision" class="section hidden">
-    <div class="container">
-      <h2>الإشراف</h2>
-      <div class="card">
-        <h3>مشروع التخرج</h3>
-        <p>عنوان: نظام توصية مالي ذكي</p>
-        <p>المشرف: د. علي بن محمد الغامدي</p>
-        <p>الفترة: سبتمبر 2024 – مايو 2025</p>
-      </div>
+<section id="supervision" class="section hidden">
+  <div class="container">
+    <h2>الإشراف</h2>
+    <div class="card">
+      <h3>مشروع التخرج</h3>
+      <p>عنوان: نظام توصية مالي ذكي</p>
+      <p>المشرف: د. علي بن محمد الغامدي</p>
+      <p>الفترة: سبتمبر 2024 – مايو 2025</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- تقارير الإنجاز -->
-  <section id="reports" class="section hidden">
-    <div class="container">
-      <h2>تقارير الإنجاز</h2>
-      <div class="card">
-        <h3>إحصائيات النشاط</h3>
-        <p>عدد المشاركات: 2</p>
-        <p>عدد الدورات: 2</p>
-        <p>عدد الإشرافات: 1</p>
-      </div>
-      <div class="card">
-        <h3>النسبة المئوية للتقدم</h3>
-        <p>المواد الأكاديمية المكتملة: 90%</p>
-      </div>
+<section id="reports" class="section hidden">
+  <div class="container">
+    <h2>تقارير الإنجاز</h2>
+    <div class="card">
+      <h3>إحصائيات النشاط</h3>
+      <p>عدد المشاركات: 2</p>
+      <p>عدد الدورات: 2</p>
+      <p>عدد الإشرافات: 1</p>
     </div>
-  </section>
-
-  <!-- ملف الباحث الناشئ -->
-  <section id="profile" class="section hidden">
-    <div class="container">
-      <h2>ملف الباحث الناشئ</h2>
-      <div class="card">
-        <h3>ابدأ في بناء ملفك البحثي</h3>
-        <p>ربط حسابك في ORCID يمنحك سجلًا مهنيًا موثوقًا يمكنك تطويره مع الزمن.</p>
-      </div>
+    <div class="card">
+      <h3>النسبة المئوية للتقدم</h3>
+      <p>المواد الأكاديمية المكتملة: 90%</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p>
+<section id="orcid" class="section hidden">
+  <div class="container">
+    <h2>ربط ORCID</h2>
+    <div class="card">
+      <h3>ربط ORCID</h3>
+      <p>الربط مع ORCID اختياري حسب التخصص والدرجة العلمية</p>
+      <p>حالة الربط: <span id="orcid-status">لم يتم الربط بعد</span></p>
+      <button class="btn" id="orcid-btn">جلب أحدث البيانات من ORCID</button>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script>
-    // ORCID button logic
-    const CLIENT_ID    = "xx";
-    const REDIRECT_URI = "https://b8ecd6d38c5a.ngrok.app/callback";
-    document.getElementById("orcid-btn").addEventListener("click", () => {
-      const url = [
-        "https://orcid.org/oauth/authorize",
-        `?client_id=${CLIENT_ID}`,
-        "&response_type=code",
-        "&scope=/authenticate",
-        `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`
-      ].join("");
-      window.location.href = url;
+<section id="profile" class="section hidden">
+  <div class="container">
+    <h2>ملف الباحث الناشئ</h2>
+    <div class="card">
+      <h3>ابدأ في بناء ملفك البحثي</h3>
+      <p>ربط حسابك في ORCID يمنحك سجلًا مهنيًا موثوقًا يمكنك تطويره مع الزمن.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>تواصل معنا</p>
+  <div class="social-icons">
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-linkedin"></i></a>
+  </div>
+  <p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p>
+</footer>
+
+<!-- Scripts -->
+<script>
+  // Dropdown menu toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const mainMenu = document.getElementById('main-menu');
+  menuToggle.addEventListener('click', e => {
+    e.stopPropagation();
+    mainMenu.style.display = mainMenu.style.display === 'block' ? 'none' : 'block';
+  });
+  window.addEventListener('click', () => mainMenu.style.display = 'none');
+
+  // Section switching
+  function showSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+    mainMenu.style.display = 'none';
+  }
+  document.querySelectorAll('#main-menu a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      showSection(a.getAttribute('data-target'));
     });
+  });
 
-    // Dropdown toggle
-    const menuToggle = document.getElementById('menu-toggle');
-    const mainMenu   = document.getElementById('main-menu');
-    menuToggle.addEventListener('click', e => {
-      e.stopPropagation();
-      mainMenu.style.display = mainMenu.style.display === 'block' ? 'none' : 'block';
-    });
-    window.addEventListener('click', () => mainMenu.style.display = 'none');
+  // Show academic by default
+  showSection('academic');
 
-    // Section switcher
-    function showSection(id) {
-      document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
-      mainMenu.style.display = 'none';
-    }
-    document.querySelectorAll('#main-menu a').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        showSection(a.getAttribute('data-target'));
-      });
-    });
+  // ORCID button
+  const CLIENT_ID = "xx";
+  const REDIRECT_URI = "https://b8ecd6d38c5a.ngrok.app/callback";
+  document.getElementById("orcid-btn").addEventListener("click", () => {
+    const url = [
+      "https://orcid.org/oauth/authorize",
+      `?client_id=${CLIENT_ID}`,
+      "&response_type=code",
+      "&scope=/authenticate",
+      `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`
+    ].join("");
+    window.location.href = url;
+  });
+</script>
 
-    // Show academic by default
-    showSection('academic');
-  </script>
 </body>
 </html>
