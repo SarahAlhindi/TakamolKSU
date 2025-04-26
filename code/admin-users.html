@@ -5,174 +5,203 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>مسؤول النظام – بيانات المستخدمين</title>
 
-  <!-- Chart.js -->
+  <!-- Load Font Awesome & Chart.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     @font-face { font-family: 'GE Dinar'; src: url('./fonts/GE-Dinar-One-Medium.otf') format('opentype'); }
     * { box-sizing:border-box; margin:0; padding:0; }
-    body { font-family:'GE Dinar',sans-serif; background:#f5f7fa; color:#333; display:flex; flex-direction:column; min-height:100vh; }
-    .container { width:90%; max-width:1200px; margin: auto; }
+    body { font-family:'GE Dinar',sans-serif; background:#f5f7fa; color:#333; line-height:1.6; overflow-x:hidden; }
+    .container { width:90%; max-width:1200px; margin:auto; }
 
     /* Header */
-    header { background:#0084bd; color:#fff; padding:15px 0; position:relative; }
-    header .container { display:flex; align-items:center; justify-content:space-between; }
-    header img { height:60px; }
-    .menu-btn { background:transparent; border:none; display:flex; flex-direction:column; cursor:pointer; }
-    .menu-btn .bar { width:25px; height:3px; background:#fff; margin:3px 0; }
-    .dropdown-menu { display:none; position:absolute; top:100%; right:20px; background:#fff; border:1px solid #ddd; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.2); }
-    .dropdown-menu a { display:block; padding:10px; color:#333; text-decoration:none; border-bottom:1px solid #eee; }
-    .dropdown-menu a:last-child { border-bottom:none; }
-    .dropdown-menu a:hover { background:#f0f8ff; }
+    header { background:#0084bd; box-shadow:0 2px 8px rgba(0,0,0,0.3); position:relative; z-index:20; }
+    header .container { display:flex; align-items:center; padding:10px 20px; direction:rtl; justify-content:space-between; }
+    .ksu-logo { height:60px; }
+    .takamoul-logo { height:80px; }
+    .header-nav { flex:1; display:flex; justify-content:flex-end; }
+    .header-nav ul { display:flex; list-style:none; gap:30px; }
+    .header-nav a { color:#fff; text-decoration:none; font-weight:bold; padding:8px 12px; border-radius:4px; transition:background 0.2s; }
+    .header-nav a:hover, .header-nav a:focus { background:#006a9e; }
 
-    /* Greetings */
-    .section { padding:30px 0; flex-grow:1; }
-    .greeting { text-align:right; font-size:1.6rem; margin-bottom:5px; }
-    .instructions { text-align:right; font-size:1rem; margin-bottom:25px; color:#555; }
+    /* Section */
+    .section { padding:30px 0; }
+    .greeting, .instructions { opacity:0; transform:translateY(20px); animation:fadeInUp 0.8s forwards; }
+    .greeting { font-size:1.6rem; animation-delay:0.3s; }
+    .instructions { font-size:1rem; color:#555; margin-bottom:25px; animation-delay:0.5s; }
 
-    /* KPI Cards */
-    .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; margin-bottom:40px; }
+    /* KPI Cards & Charts styling */
+    .kpi-grid, .charts, .feed { opacity:0; transform:translateY(30px); animation:fadeInUp 0.8s forwards; }
+    .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; margin-bottom:40px; animation-delay:0.7s; }
     .kpi-card { background:#fff; border-radius:10px; padding:20px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
-    .kpi-icon { width:40px; margin-bottom:10px; }
     .kpi-number { font-size:2rem; font-weight:bold; }
     .kpi-label { color:#666; }
 
-    /* Charts */
-    .charts { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:30px; margin-bottom:40px; }
+    .charts { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:30px; margin-bottom:40px; animation-delay:0.9s; }
     .chart-section { background:#fff; border-radius:10px; padding:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
     .chart-section h3 { text-align:center; margin-bottom:10px; }
-    .chart-section canvas { max-height:300px; }
 
-    /* Activity Feed */
-    .feed { background:#fff; border-radius:10px; padding:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1); margin-bottom:40px; }
-    .feed h3 { margin-bottom:15px; text-align:center; }
-    .feed ul { list-style:none; }
-    .feed li { padding:10px; border-bottom:1px solid #eee; }
-    .feed li:last-child { border-bottom:none; }
-    .feed time { display:block; font-size:0.85rem; color:#888; margin-top:5px; }
+    /* Feed */
+    .feed { background:#fff; border-radius:10px; padding:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1); animation-delay:1.1s; }
+    .feed h3 { text-align:center; margin-bottom:15px; }
 
     /* Footer */
-    footer { background:#0084bd; color:#fff; text-align:center; padding:15px 0; }
+    footer { background:#0084bd; color:#fff; text-align:center; padding:30px 0; border-top-left-radius:100px; box-shadow:0 -5px 15px rgba(0,0,0,0.3); }
+    footer p { font-size:16px; }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px); }
+      to { opacity:1; transform:translateY(0); }
+    }
   </style>
 </head>
 <body>
-
   <header>
-    <div class="container">
-      <button class="menu-btn" id="menu-toggle">
-        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-      </button>
-      <img src="images/Takamoul_Logo.png" alt="Logo">
-      <nav id="admin-menu" class="dropdown-menu">
-        <a href="admin-users.html">بيانات المستخدمين</a>
-        <a href="admin-roles.html">إدارة الصلاحيات</a>
-        <a href="admin-orcid.html">تكامل ORCID</a>
-        <a href="admin-systems.html">حالة الأنظمة</a>
-        <a href="admin-reports.html">التقارير العامة</a>
-        <a href="admin-events.html">إدارة الفعاليات</a>
-        <a href="admin-support.html">الدعم الفني</a>
-        <a href="admin-alerts.html">إدارة التنبيهات</a>
-        <a href="admin-data.html">استيراد/تصدير البيانات</a>
-      </nav>
+    <div class="container" style="justify-content: flex-start;">
+      <img src="images/Takamoul Logo.png" alt="Takamoul Logo" class="takamoul-logo" style="margin-left: auto;">
+  
+      <div class="header-buttons" style="display:flex; gap:20px; align-items:center; position:relative;">
+  
+        <!-- Notification Button -->
+        <button id="notification-btn" style="background:none; border:none; color:white; font-size:22px; cursor:pointer; position:relative;">
+          <i class="fas fa-bell"></i>
+        </button>
+  
+        <!-- Notification Popup -->
+        <div id="notification-popup" style="display:none; position:absolute; top:40px; right:0; background:white; color:black; border-radius:8px; padding:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2); width:250px; text-align:right; z-index:100;">
+          <p style="margin-bottom:8px; font-weight:bold;">الإشعارات:</p>
+          <ul style="list-style:none; padding:0; margin:0;">
+            <li style="padding:6px 0; border-bottom:1px solid #eee;">تم تحديث صلاحيات المستخدمين</li>
+            <li style="padding:6px 0; border-bottom:1px solid #eee;">ورشة عمل جديدة متاحة للتسجيل</li>
+            <li style="padding:6px 0;">تم تحميل تقرير الأداء بنجاح</li>
+          </ul>
+        </div>
+  
+        <!-- Logout Button -->
+        <button onclick="location.href='index.html';" style="background:none; border:none; color:white; font-size:22px; cursor:pointer;">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+  
+      </div>
+  
+      <img src="images/ksu logo.png" alt="KSU Logo" class="ksu-logo" style="margin-right: 30px;">
     </div>
   </header>
-
+  
+  <!-- Navigation Bar -->
+  <nav style="background:#006a9e; padding:10px 0;">
+    <div class="container" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
+      <a href="admin-users.html" class="nav-link">بيانات المستخدمين</a>
+      <a href="admin-roles.html" class="nav-link">إدارة الصلاحيات</a>
+      <a href="admin-orcid.html" class="nav-link">تكامل ORCID</a>
+      <a href="admin-systems.html" class="nav-link">حالة الأنظمة المتكاملة</a>
+      <a href="admin-reports.html" class="nav-link">التقارير العامة</a>
+      <a href="admin-events.html" class="nav-link">إدارة الفعاليات</a>
+      <a href="admin-support.html" class="nav-link">الدعم الفني</a>
+      <a href="admin-data.html" class="nav-link">استيراد/تصدير البيانات</a>
+    </div>
+  </nav>
+  
+  <!-- Styles for hover effect -->
+  <style>
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 12px;
+      transition: background 0.3s, color 0.3s;
+      border-radius: 6px;
+    }
+    .nav-link:hover {
+      background: #00557e;
+      color: #d1e7ff;
+    }
+  </style>
+  
+  <!-- Script for notification popup -->
+  <script>
+    const notifBtn = document.getElementById('notification-btn');
+    const notifPopup = document.getElementById('notification-popup');
+  
+    notifBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      notifPopup.style.display = notifPopup.style.display === 'block' ? 'none' : 'block';
+    });
+  
+    window.addEventListener('click', () => {
+      notifPopup.style.display = 'none';
+    });
+  </script>
+  
+          
   <section class="section container">
     <div class="greeting">أهلاً فيصل!</div>
     <div class="instructions">
       هنا تستطيع عرض وتحليل بيانات المستخدمين: نظرة عامة، نشاط اليوم، ونمو التسجيلات داخل النظام.
     </div>
 
-<!-- KPI cards -->
-<div class="kpi-grid">
-  <div class="kpi-card">
-    <div class="kpi-number">120</div>
-    <div class="kpi-label">إجمالي المستخدمين</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-number">45</div>
-    <div class="kpi-label">نشطون اليوم</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-number">12%</div>
-    <div class="kpi-label">معدل النمو الشهري</div>
-  </div>
-</div>
-    <!-- Charts -->
-    <div class="charts">
-      <div class="chart-section">
-        <h3>توزيع المستخدمين حسب الفئة</h3>
-        <canvas id="userDistributionChart"></canvas>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-number">120</div>
+        <div class="kpi-label">إجمالي المستخدمين</div>
       </div>
-      <div class="chart-section">
-        <h3>المستخدمون الجدد</h3>
-        <canvas id="newUsersChart"></canvas>
+      <div class="kpi-card">
+        <div class="kpi-number">45</div>
+        <div class="kpi-label">نشطون اليوم</div>
       </div>
-      <div class="chart-section">
-        <h3>التسجيل اليومي خلال الأسبوع الماضي</h3>
-        <canvas id="dailySignupsChart"></canvas>
+      <div class="kpi-card">
+        <div class="kpi-number">12%</div>
+        <div class="kpi-label">معدل النمو الشهري</div>
       </div>
     </div>
 
-    <!-- Activity Feed -->
+    <div class="charts">
+      <div class="chart-section"><h3>توزيع المستخدمين حسب الفئة</h3><canvas id="userDistributionChart"></canvas></div>
+      <div class="chart-section"><h3>المستخدمون الجدد</h3><canvas id="newUsersChart"></canvas></div>
+      <div class="chart-section"><h3>التسجيل اليومي خلال الأسبوع الماضي</h3><canvas id="dailySignupsChart"></canvas></div>
+    </div>
+
     <div class="feed">
       <h3>آخر التسجيلات</h3>
       <ul>
-        <li>
-          تم تسجيل الطالب “سارة آل ناصر”
-          <time datetime="2025-04-25T10:15">25 أبريل 2025، 10:15</time>
-        </li>
-        <li>
-          تم تسجيل الموظف “خالد العتيبي”
-          <time datetime="2025-04-24T14:30">24 أبريل 2025، 14:30</time>
-        </li>
-        <li>
-          تم تسجيل د. نورة الزهراني
-          <time datetime="2025-04-23T09:45">23 أبريل 2025، 09:45</time>
-        </li>
+        <li>تم تسجيل الطالب “سارة آل ناصر”<time>25 أبريل 2025، 10:15</time></li>
+        <li>تم تسجيل الموظف “خالد العتيبي”<time>24 أبريل 2025، 14:30</time></li>
+        <li>تم تسجيل د. نورة الزهراني<time>23 أبريل 2025، 09:45</time></li>
       </ul>
     </div>
   </section>
 
-  <footer>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</footer>
+  <footer><p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p></footer>
 
+  <!-- Chart.js Code -->
   <script>
-    // Menu toggle
-    document.getElementById('menu-toggle').addEventListener('click', e => {
-      e.stopPropagation();
-      const menu = document.getElementById('admin-menu');
-      menu.style.display = menu.style.display==='block'?'none':'block';
-    });
-    window.addEventListener('click', ()=> {
-      document.getElementById('admin-menu').style.display = 'none';
-    });
-
-    // Charts
     new Chart(document.getElementById('userDistributionChart'), {
       type: 'pie',
       data: {
         labels: ['أعضاء هيئة التدريس','طلاب','الموظفون الإداريون'],
-        datasets:[{ data:[30,70,20], backgroundColor:['#4e79a7','#f28e2b','#e15759'] }]
+        datasets: [{ data: [30, 70, 20], backgroundColor: ['#4e79a7', '#f28e2b', '#e15759'] }]
       },
-      options:{ responsive:true, plugins:{legend:{position:'bottom'}} }
+      options: { responsive:true, plugins:{legend:{position:'bottom'}} }
     });
 
     new Chart(document.getElementById('newUsersChart'), {
-      type:'bar',
-      data:{
-        labels:['هذا الأسبوع','هذا الشهر'],
-        datasets:[{ label:'جدد', data:[5,15], backgroundColor:['#76b7b2','#59a14f'] }]
+      type: 'bar',
+      data: {
+        labels: ['هذا الأسبوع', 'هذا الشهر'],
+        datasets: [{ label: 'جدد', data: [5, 15], backgroundColor: ['#76b7b2', '#59a14f'] }]
       },
-      options:{ responsive:true, scales:{y:{beginAtZero:true,ticks:{stepSize:5}}}, plugins:{legend:{display:false}} }
+      options: { responsive:true, scales:{y:{beginAtZero:true,ticks:{stepSize:5}}}, plugins:{legend:{display:false}} }
     });
 
     new Chart(document.getElementById('dailySignupsChart'), {
-      type:'line',
-      data:{
-        labels:['19 أبريل','20 أبريل','21 أبريل','22 أبريل','23 أبريل','24 أبريل','25 أبريل'],
-        datasets:[{ label:'تسجيلات يومية', data:[2,4,3,5,6,7,5], fill:false, tension:0.4 }]
+      type: 'line',
+      data: {
+        labels: ['19 أبريل', '20 أبريل', '21 أبريل', '22 أبريل', '23 أبريل', '24 أبريل', '25 أبريل'],
+        datasets: [{ label: 'تسجيلات يومية', data: [2, 4, 3, 5, 6, 7, 5], fill:false, tension:0.4 }]
       },
-      options:{ responsive:true, scales:{y:{beginAtZero:true,ticks:{stepSize:1}}} }
+      options: { responsive:true, scales:{y:{beginAtZero:true,ticks:{stepSize:1}}} }
     });
   </script>
 </body>

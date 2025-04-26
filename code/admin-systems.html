@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حالة الأنظمة المتكاملة - Takamoul</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+
+    @font-face {
+      font-family: 'GE Dinar';
+      src: url('./fonts/GE-Dinar-One-Medium.otf') format('opentype');
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'GE Dinar', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    header, nav, footer { width: 100%; }
+
+    /* Layout for header */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .header-buttons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      position: relative;
+    }
+
+    .takamoul-logo {
+      height: 80px;
+      margin-left: auto;
+    }
+
+    .ksu-logo {
+      height: 60px;
+      margin-right: 30px;
+    }
+
+    /* Navigation */
+    nav {
+      background: #006a9e;
+      padding: 10px 0;
+    }
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 12px;
+      transition: background 0.3s, color 0.3s;
+      border-radius: 6px;
+    }
+    .nav-link:hover {
+      background: #00557e;
+      color: #d1e7ff;
+    }
+    nav .container {
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Header */
+    header { background:#0084bd; box-shadow:0 2px 8px rgba(0,0,0,0.3); position:relative; z-index:20; }
+    header .container { display:flex; align-items:center; padding:10px 20px; direction:rtl; justify-content:space-between; }
+    .ksu-logo { height:60px; }
+    .takamoul-logo { height:80px; }
+    .header-nav { flex:1; display:flex; justify-content:flex-end; }
+    .header-nav ul { display:flex; list-style:none; gap:30px; }
+    .header-nav a { color:#fff; text-decoration:none; font-weight:bold; padding:8px 12px; border-radius:4px; transition:background 0.2s; }
+    .header-nav a:hover, .header-nav a:focus { background:#006a9e; }
+
+
+    /* Page Content */
+    .page-container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 0;
+    }
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 40px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .systems-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .system-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .system-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    .system-card h2 {
+      font-size: 24px;
+      color: #0084bd;
+      margin-bottom: 15px;
+    }
+    .status {
+      font-size: 18px;
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .active {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .down {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .update-btn {
+      background: #0084bd;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-family: 'GE Dinar', sans-serif;
+    }
+    .update-btn:hover {
+      background: #005a8c;
+    }
+
+    /* Footer */
+    footer {
+      background: #0084bd;
+      color: #fff;
+      text-align: center;
+      padding: 30px 0;
+      border-top-left-radius: 100px;
+      box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+      margin-top: 40px;
+    }
+    footer p { font-size: 16px; }
+  </style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header>
+  <div class="container">
+    <img src="images/Takamoul Logo.png" alt="Takamoul Logo" class="takamoul-logo">
+
+    <div class="header-buttons">
+      <!-- Notification Button -->
+      <button id="notification-btn" style="background:none; border:none; color:white; font-size:22px; cursor:pointer;">
+        <i class="fas fa-bell"></i>
+      </button>
+
+      <!-- Notification Popup -->
+      <div id="notification-popup" style="display:none; position:absolute; top:40px; right:0; background:white; color:black; border-radius:8px; padding:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2); width:250px; text-align:right; z-index:100;">
+        <p style="margin-bottom:8px; font-weight:bold;">الإشعارات:</p>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="padding:6px 0; border-bottom:1px solid #eee;">تم تحديث صلاحيات المستخدمين</li>
+          <li style="padding:6px 0; border-bottom:1px solid #eee;">ورشة عمل جديدة متاحة للتسجيل</li>
+          <li style="padding:6px 0;">تم تحميل تقرير الأداء بنجاح</li>
+        </ul>
+      </div>
+
+      <!-- Logout Button -->
+      <button onclick="location.href='index.html';" style="background:none; border:none; color:white; font-size:22px; cursor:pointer;">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+
+    <img src="images/ksu logo.png" alt="KSU Logo" class="ksu-logo">
+  </div>
+</header>
+
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <a href="admin-users.html" class="nav-link">بيانات المستخدمين</a>
+    <a href="admin-roles.html" class="nav-link">إدارة الصلاحيات</a>
+  <a href="admin-orcid.html" class="nav-link">تكامل ORCID</a>
+    <a href="admin-systems.html" class="nav-link">حالة الأنظمة المتكاملة</a>
+    <a href="admin-reports.html" class="nav-link">التقارير العامة</a>
+    <a href="admin-events.html" class="nav-link">إدارة الفعاليات</a>
+    <a href="admin-support.html" class="nav-link">الدعم الفني</a>
+    <a href="admin-data.html" class="nav-link">استيراد/تصدير البيانات</a>
+  </div>
+</nav>
+
+<!-- Page Content -->
+<section class="page-container">
+  <h1>حالة الأنظمة المتكاملة</h1>
+
+  <div class="systems-grid">
+    <div class="system-card">
+      <h2>نظام الموارد البشرية</h2>
+      <div class="status active">متاح ✅</div>
+      <button class="update-btn" onclick="alert('تم التحقق، النظام محدث.')">تحقق من التحديثات</button>
+    </div>
+
+    <div class="system-card">
+      <h2>تطوير المهارات</h2>
+      <div class="status down">غير متاح ❌</div>
+      <button class="update-btn" onclick="alert('جاري التحقق، يرجى المحاولة لاحقاً.')">تحقق من التحديثات</button>
+    </div>
+
+    <div class="system-card">
+      <h2>نظام البحث العلمي</h2>
+      <div class="status active">متاح ✅</div>
+      <button class="update-btn" onclick="alert('النظام يعمل بكفاءة.')">تحقق من التحديثات</button>
+    </div>
+
+    <div class="system-card">
+      <h2>نظام البريد الإلكتروني</h2>
+      <div class="status active">متاح ✅</div>
+      <button class="update-btn" onclick="alert('لا توجد تحديثات جديدة.')">تحقق من التحديثات</button>
+    </div>
+
+    <div class="system-card">
+      <h2>نظام التعلم الإلكتروني (LMS)</h2>
+      <div class="status down">غير متاح ❌</div>
+      <button class="update-btn" onclick="alert('النظام قيد الصيانة.')">تحقق من التحديثات</button>
+    </div>
+
+    <div class="system-card">
+      <h2>تكامل ORCID</h2>
+      <div class="status active">متاح ✅</div>
+      <button class="update-btn" onclick="alert('تمت المزامنة مع ORCID.')">تحقق من التحديثات</button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p>
+</footer>
+
+<!-- Script for Notification Popup -->
+<script>
+  const notifBtn = document.getElementById('notification-btn');
+  const notifPopup = document.getElementById('notification-popup');
+
+  notifBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    notifPopup.style.display = notifPopup.style.display === 'block' ? 'none' : 'block';
+  });
+
+  window.addEventListener('click', () => {
+    notifPopup.style.display = 'none';
+  });
+
+  notifPopup.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+</script>
+
+</body>
+</html>
