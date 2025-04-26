@@ -221,13 +221,39 @@
       <a href="#">سجل الآن</a>
     </div>
   </div>
+
+  <!-- Future Prediction Section -->
+  <div class="academic-info">
+    <h3>التنبؤ بالأداء المستقبلي</h3>
+    <p>بناءً على أدائك الحالي، من المتوقع أن تحقق:</p>
+
+    <div class="kpi-grid" style="margin-top: 20px;">
+      <div class="kpi-card">
+        <div class="kpi-number">4.80</div>
+        <div class="kpi-label">معدل تراكمي متوقع</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-number">+3 مشاريع</div>
+        <div class="kpi-label">مشاريع إضافية</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-number">+2 دورات</div>
+        <div class="kpi-label">دورات تدريبية مكتملة</div>
+      </div>
+    </div>
+
+    <div class="chart-section" style="margin-top: 30px;">
+      <h3>نمو الأداء المتوقع</h3>
+      <canvas id="futurePredictionChart"></canvas>
+    </div>
+  </div>
+
 </section>
 
 <!-- Footer -->
 <footer><p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p></footer>
 
 <script>
-  // Charts setup
   new Chart(document.getElementById('userPie'), {
     type: 'pie',
     data: { labels: ['مشاركات', 'دورات', 'مشاريع'], datasets: [{ data: [5,8,2], backgroundColor: ['#4e79a7', '#f28e2b', '#e15759'] }] },
@@ -245,9 +271,26 @@
     data: { labels: ['مشاريع 2024', 'مشاريع 2025'], datasets: [{ label: 'عدد المشاريع', data: [1,2], backgroundColor: '#59a14f' }] },
     options: { responsive: true }
   });
+
+  new Chart(document.getElementById('futurePredictionChart'), {
+    type: 'line',
+    data: {
+      labels: ['الحالي', 'شهر 1', 'شهر 2', 'شهر 3'],
+      datasets: [{
+        label: 'معدل الأداء',
+        data: [75, 80, 85, 90],
+        fill: true,
+        backgroundColor: 'rgba(0,132,189,0.2)',
+        borderColor: '#0084bd',
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: { y: { beginAtZero: true, max: 100 } }
+    }
+  });
 </script>
 
 </body>
 </html>
-
-
