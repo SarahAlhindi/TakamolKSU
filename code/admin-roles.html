@@ -2,9 +2,10 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إدارة الصلاحيات - Takamoul</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>إدارة الصلاحيات – Takamoul</title>
 
+  <!-- Load Font Awesome & Chart.js -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
@@ -20,22 +21,74 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
-    header, nav, footer { width: 100%; }
+    .container { width: 90%; max-width: 1200px; margin: auto; }
 
     /* Header */
-    header { background:#0084bd; box-shadow:0 2px 8px rgba(0,0,0,0.3); position:relative; z-index:20; }
-    header .container { display:flex; align-items:center; padding:10px 20px; direction:rtl; justify-content:space-between; }
-    .ksu-logo { height:60px; }
-    .takamoul-logo { height:80px; }
-    .header-nav { flex:1; display:flex; justify-content:flex-end; }
-    .header-nav ul { display:flex; list-style:none; gap:30px; }
-    .header-nav a { color:#fff; text-decoration:none; font-weight:bold; padding:8px 12px; border-radius:4px; transition:background 0.2s; }
-    .header-nav a:hover, .header-nav a:focus { background:#006a9e; }
+    header {
+      background: #0084bd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 20;
+    }
+    header .container {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      direction: rtl;
+      justify-content: flex-start;
+    }
+    .ksu-logo { height: 60px; margin-right: 30px; }
+    .takamoul-logo { height: 80px; margin-left: auto; }
+    .header-buttons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      position: relative;
+    }
+    .header-buttons button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    /* Notification Popup */
+    #notification-popup {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background: white;
+      color: black;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      width: 250px;
+      text-align: right;
+      z-index: 100;
+    }
+    #notification-popup ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #notification-popup li {
+      padding: 6px 0;
+      border-bottom: 1px solid #eee;
+    }
+    #notification-popup li:last-child {
+      border-bottom: none;
+    }
 
     /* Navigation */
-    nav { background: #006a9e; padding: 10px 0; }
+    nav {
+      background: #006a9e;
+      padding: 10px 0;
+    }
     .nav-link {
-      color: #d1e7ff;
+      color: white;
       text-decoration: none;
       font-weight: bold;
       padding: 8px 12px;
@@ -44,9 +97,14 @@
     }
     .nav-link:hover {
       background: #00557e;
-      color: white;
+      color: #d1e7ff;
     }
-    nav .container { justify-content: center; flex-wrap: wrap; gap: 20px; }
+    nav .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
 
     /* Animations */
     @keyframes fadeInUp {
@@ -54,9 +112,17 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Page Content */
-    .page-container { width: 90%; max-width: 1200px; margin: auto; padding: 40px 0; }
-    h1, h2 { text-align: center; animation: fadeInUp 1s ease-out; }
+    /* Content */
+    .page-container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 0;
+    }
+    h1, h2 {
+      text-align: center;
+      animation: fadeInUp 1s ease-out;
+    }
     h1 { font-size: 36px; margin-bottom: 40px; }
     h2 { font-size: 28px; margin: 50px 0 20px; color: #0084bd; }
 
@@ -90,7 +156,6 @@
       padding: 15px;
       text-align: center;
       border-bottom: 1px solid #eee;
-      font-family: 'GE Dinar', sans-serif;
     }
     th {
       background: #0084bd;
@@ -129,88 +194,39 @@
 
 <body>
 
-    <header>
-        <div class="container" style="justify-content: flex-start;">
-          <img src="images/Takamoul Logo.png" alt="Takamoul Logo" class="takamoul-logo" style="margin-left: auto;">
-      
-          <div class="header-buttons" style="display:flex; gap:20px; align-items:center; position:relative;">
-      
-            <!-- Notification Button -->
-            <button id="notification-btn" style="background:none; border:none; color:white; font-size:22px; cursor:pointer;">
-              <i class="fas fa-bell"></i>
-            </button>
-      
-            <!-- Notification Popup -->
-            <div id="notification-popup" style="display:none; position:absolute; top:45px; right:60px; background:white; color:black; border-radius:8px; padding:10px; box-shadow:0 2px 8px rgba(0,0,0,0.3); width:250px; text-align:right; z-index:100;">
-              <p style="font-weight:bold; margin-bottom:8px;">الإشعارات</p>
-              <ul style="list-style:none; margin:0; padding:0;">
-                <li style="padding:8px 0; border-bottom:1px solid #eee;">تم رفع تقرير الأداء بنجاح</li>
-                <li style="padding:8px 0; border-bottom:1px solid #eee;">ورشة عمل جديدة متاحة للتسجيل</li>
-                <li style="padding:8px 0;">تم تحديث بيانات الطالب</li>
-              </ul>
-            </div>
-      
-            <!-- Logout Button -->
-            <button onclick="location.href='index.html';" style="background:none; border:none; color:white; font-size:22px; cursor:pointer;">
-              <i class="fas fa-sign-out-alt"></i>
-            </button>
-      
-          </div>
-      
-          <img src="images/ksu logo.png" alt="KSU Logo" class="ksu-logo" style="margin-right: 30px;">
-        </div>
-      </header>
-      
-<!-- Navigation Bar -->
-<nav style="background:#0084bd; padding:10px 0;">
-    <div class="container" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
-        <a href="admin-users.html" class="nav-link">بيانات المستخدمين</a>
-        <a href="admin-roles.html" class="nav-link">إدارة الصلاحيات</a>
-        <a href="admin-orcid.html" class="nav-link">تكامل ORCID</a>
-      <a href="admin-systems.html" class="nav-link">حالة الأنظمة المتكاملة</a>
-      <a href="admin-reports.html" class="nav-link">التقارير العامة</a>
-      <a href="admin-events.html" class="nav-link">إدارة الفعاليات</a>
-      <a href="admin-support.html" class="nav-link">الدعم الفني</a>
-      <a href="admin-data.html" class="nav-link">استيراد/تصدير البيانات</a>
+<!-- Header -->
+<header>
+  <div class="container">
+    <img src="images/Takamoul Logo.png" alt="Takamoul Logo" class="takamoul-logo">
+    <div class="header-buttons">
+      <button id="notification-btn"><i class="fas fa-bell"></i></button>
+      <div id="notification-popup">
+        <p><strong>الإشعارات:</strong></p>
+        <ul>
+          <li>تم تحديث صلاحيات المستخدمين</li>
+          <li>ورشة عمل جديدة متاحة للتسجيل</li>
+          <li>تم تحميل تقرير الأداء بنجاح</li>
+        </ul>
+      </div>
+      <button onclick="location.href='index.html';"><i class="fas fa-sign-out-alt"></i></button>
     </div>
-  </nav>
-        
-      <!-- Style for nav links -->
-      <style>
-        .nav-link {
-          color: white;
-          text-decoration: none;
-          font-weight: bold;
-          padding: 8px 14px;
-          transition: background 0.3s, color 0.3s;
-          border-radius: 6px;
-          font-family: 'GE Dinar', sans-serif;
-        }
-        .nav-link:hover {
-          background: #006a9e;
-          color: #d1e7ff;
-        }
-      </style>
-      
-      <!-- Script for notification popup -->
-      <script>
-        const notifBtn = document.getElementById('notification-btn');
-        const notifPopup = document.getElementById('notification-popup');
-      
-        notifBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          notifPopup.style.display = notifPopup.style.display === 'block' ? 'none' : 'block';
-        });
-      
-        window.addEventListener('click', () => {
-          notifPopup.style.display = 'none';
-        });
-      
-        notifPopup.addEventListener('click', (e) => {
-          e.stopPropagation(); // keep popup open if click inside
-        });
-      </script>
-      
+    <img src="images/ksu logo.png" alt="KSU Logo" class="ksu-logo">
+  </div>
+</header>
+
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <a href="admin-users.html" class="nav-link">بيانات المستخدمين</a>
+    <a href="admin-roles.html" class="nav-link">إدارة الصلاحيات</a>
+    <a href="admin-orcid.html" class="nav-link">تكامل ORCID</a>
+    <a href="admin-systems.html" class="nav-link">حالة الأنظمة المتكاملة</a>
+    <a href="admin-reports.html" class="nav-link">التقارير العامة</a>
+    <a href="admin-events.html" class="nav-link">إدارة الفعاليات</a>
+    <a href="admin-support.html" class="nav-link">الدعم الفني</a>
+    <a href="admin-data.html" class="nav-link">استيراد/تصدير البيانات</a>
+  </div>
+</nav>
 
 <!-- Page Content -->
 <section class="page-container">
@@ -220,7 +236,7 @@
     <input type="text" id="searchInput" placeholder="ابحث عن مستخدم بالاسم أو الرقم">
   </div>
 
-  <!-- Faculty Section -->
+  <!-- Faculty -->
   <h2>أعضاء هيئة التدريس</h2>
   <table id="facultyTable">
     <thead>
@@ -238,25 +254,19 @@
         <td>د. عبدالله السبيعي</td>
         <td>عضو هيئة تدريس</td>
         <td id="status-faculty-1">مفعل</td>
-        <td>
-          <button onclick="toggleStatus('faculty-1')">تعطيل</button>
-          <button>تعديل</button>
-        </td>
+        <td><button onclick="toggleStatus('faculty-1')">تعطيل</button><button>تعديل</button></td>
       </tr>
       <tr>
         <td>2002</td>
         <td>د. ريم العتيبي</td>
         <td>عضو هيئة تدريس</td>
         <td id="status-faculty-2">مفعل</td>
-        <td>
-          <button onclick="toggleStatus('faculty-2')">تعطيل</button>
-          <button>تعديل</button>
-        </td>
+        <td><button onclick="toggleStatus('faculty-2')">تعطيل</button><button>تعديل</button></td>
       </tr>
     </tbody>
   </table>
 
-  <!-- Students Section -->
+  <!-- Students -->
   <h2>الطلاب</h2>
   <table id="studentsTable">
     <thead>
@@ -274,25 +284,19 @@
         <td>سارة الناصر</td>
         <td>طالب</td>
         <td id="status-student-1">مفعل</td>
-        <td>
-          <button onclick="toggleStatus('student-1')">تعطيل</button>
-          <button>تعديل</button>
-        </td>
+        <td><button onclick="toggleStatus('student-1')">تعطيل</button><button>تعديل</button></td>
       </tr>
       <tr>
         <td>3002</td>
         <td>عبدالعزيز المطيري</td>
         <td>طالب</td>
         <td id="status-student-2">معطل</td>
-        <td>
-          <button onclick="toggleStatus('student-2')">تشغيل</button>
-          <button>تعديل</button>
-        </td>
+        <td><button onclick="toggleStatus('student-2')">تشغيل</button><button>تعديل</button></td>
       </tr>
     </tbody>
   </table>
 
-  <!-- Administrative Staff Section -->
+  <!-- Admin Staff -->
   <h2>الموظفون الإداريون</h2>
   <table id="staffTable">
     <thead>
@@ -310,10 +314,7 @@
         <td>نورة الدوسري</td>
         <td>موظف إداري</td>
         <td id="status-staff-1">مفعل</td>
-        <td>
-          <button onclick="toggleStatus('staff-1')">تعطيل</button>
-          <button>تعديل</button>
-        </td>
+        <td><button onclick="toggleStatus('staff-1')">تعطيل</button><button>تعديل</button></td>
       </tr>
     </tbody>
   </table>
@@ -327,6 +328,14 @@
 
 <!-- Scripts -->
 <script>
+  const notifBtn = document.getElementById('notification-btn');
+  const notifPopup = document.getElementById('notification-popup');
+  notifBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    notifPopup.style.display = notifPopup.style.display === 'block' ? 'none' : 'block';
+  });
+  window.addEventListener('click', () => notifPopup.style.display = 'none');
+
   function toggleStatus(id) {
     const status = document.getElementById('status-' + id);
     if (status.innerText === 'مفعل') {
@@ -344,7 +353,6 @@
   searchInput.addEventListener('keyup', function() {
     const filter = searchInput.value.toLowerCase();
     const tables = document.querySelectorAll('tbody');
-
     tables.forEach(table => {
       const rows = table.querySelectorAll('tr');
       rows.forEach(row => {

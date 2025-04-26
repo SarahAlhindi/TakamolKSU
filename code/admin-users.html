@@ -10,102 +10,105 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    @font-face { font-family: 'GE Dinar'; src: url('./fonts/GE-Dinar-One-Medium.otf') format('opentype'); }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body { font-family:'GE Dinar',sans-serif; background:#f5f7fa; color:#333; line-height:1.6; overflow-x:hidden; }
-    .container { width:90%; max-width:1200px; margin:auto; }
+    @font-face {
+      font-family: 'GE Dinar';
+      src: url('./fonts/GE-Dinar-One-Medium.otf') format('opentype');
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'GE Dinar', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    .container { width: 90%; max-width: 1200px; margin: auto; }
+
+    /* Loading Spinner */
+    #loading {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #0084bd;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
 
     /* Header */
-    header { background:#0084bd; box-shadow:0 2px 8px rgba(0,0,0,0.3); position:relative; z-index:20; }
-    header .container { display:flex; align-items:center; padding:10px 20px; direction:rtl; justify-content:space-between; }
-    .ksu-logo { height:60px; }
-    .takamoul-logo { height:80px; }
-    .header-nav { flex:1; display:flex; justify-content:flex-end; }
-    .header-nav ul { display:flex; list-style:none; gap:30px; }
-    .header-nav a { color:#fff; text-decoration:none; font-weight:bold; padding:8px 12px; border-radius:4px; transition:background 0.2s; }
-    .header-nav a:hover, .header-nav a:focus { background:#006a9e; }
-
-    /* Section */
-    .section { padding:30px 0; }
-    .greeting, .instructions { opacity:0; transform:translateY(20px); animation:fadeInUp 0.8s forwards; }
-    .greeting { font-size:1.6rem; animation-delay:0.3s; }
-    .instructions { font-size:1rem; color:#555; margin-bottom:25px; animation-delay:0.5s; }
-
-    /* KPI Cards & Charts styling */
-    .kpi-grid, .charts, .feed { opacity:0; transform:translateY(30px); animation:fadeInUp 0.8s forwards; }
-    .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; margin-bottom:40px; animation-delay:0.7s; }
-    .kpi-card { background:#fff; border-radius:10px; padding:20px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
-    .kpi-number { font-size:2rem; font-weight:bold; }
-    .kpi-label { color:#666; }
-
-    .charts { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:30px; margin-bottom:40px; animation-delay:0.9s; }
-    .chart-section { background:#fff; border-radius:10px; padding:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
-    .chart-section h3 { text-align:center; margin-bottom:10px; }
-
-    /* Feed */
-    .feed { background:#fff; border-radius:10px; padding:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1); animation-delay:1.1s; }
-    .feed h3 { text-align:center; margin-bottom:15px; }
-
-    /* Footer */
-    footer { background:#0084bd; color:#fff; text-align:center; padding:30px 0; border-top-left-radius:100px; box-shadow:0 -5px 15px rgba(0,0,0,0.3); }
-    footer p { font-size:16px; }
-
-    /* Animations */
-    @keyframes fadeInUp {
-      from { opacity:0; transform:translateY(30px); }
-      to { opacity:1; transform:translateY(0); }
+    header {
+      background: #0084bd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 20;
     }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="container" style="justify-content: flex-start;">
-      <img src="images/Takamoul Logo.png" alt="Takamoul Logo" class="takamoul-logo" style="margin-left: auto;">
-  
-      <div class="header-buttons" style="display:flex; gap:20px; align-items:center; position:relative;">
-  
-        <!-- Notification Button -->
-        <button id="notification-btn" style="background:none; border:none; color:white; font-size:22px; cursor:pointer; position:relative;">
-          <i class="fas fa-bell"></i>
-        </button>
-  
-        <!-- Notification Popup -->
-        <div id="notification-popup" style="display:none; position:absolute; top:40px; right:0; background:white; color:black; border-radius:8px; padding:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2); width:250px; text-align:right; z-index:100;">
-          <p style="margin-bottom:8px; font-weight:bold;">الإشعارات:</p>
-          <ul style="list-style:none; padding:0; margin:0;">
-            <li style="padding:6px 0; border-bottom:1px solid #eee;">تم تحديث صلاحيات المستخدمين</li>
-            <li style="padding:6px 0; border-bottom:1px solid #eee;">ورشة عمل جديدة متاحة للتسجيل</li>
-            <li style="padding:6px 0;">تم تحميل تقرير الأداء بنجاح</li>
-          </ul>
-        </div>
-  
-        <!-- Logout Button -->
-        <button onclick="location.href='index.html';" style="background:none; border:none; color:white; font-size:22px; cursor:pointer;">
-          <i class="fas fa-sign-out-alt"></i>
-        </button>
-  
-      </div>
-  
-      <img src="images/ksu logo.png" alt="KSU Logo" class="ksu-logo" style="margin-right: 30px;">
-    </div>
-  </header>
-  
-  <!-- Navigation Bar -->
-  <nav style="background:#006a9e; padding:10px 0;">
-    <div class="container" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
-      <a href="admin-users.html" class="nav-link">بيانات المستخدمين</a>
-      <a href="admin-roles.html" class="nav-link">إدارة الصلاحيات</a>
-      <a href="admin-orcid.html" class="nav-link">تكامل ORCID</a>
-      <a href="admin-systems.html" class="nav-link">حالة الأنظمة المتكاملة</a>
-      <a href="admin-reports.html" class="nav-link">التقارير العامة</a>
-      <a href="admin-events.html" class="nav-link">إدارة الفعاليات</a>
-      <a href="admin-support.html" class="nav-link">الدعم الفني</a>
-      <a href="admin-data.html" class="nav-link">استيراد/تصدير البيانات</a>
-    </div>
-  </nav>
-  
-  <!-- Styles for hover effect -->
-  <style>
+    header .container {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      direction: rtl;
+      justify-content: flex-start;
+    }
+    .ksu-logo { height: 60px; margin-right: 30px; }
+    .takamoul-logo { height: 80px; margin-left: auto; }
+    .header-buttons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      position: relative;
+    }
+    .header-buttons button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    /* Notification Popup */
+    #notification-popup {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background: white;
+      color: black;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      width: 250px;
+      text-align: right;
+      z-index: 100;
+    }
+    #notification-popup ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #notification-popup li {
+      padding: 6px 0;
+      border-bottom: 1px solid #eee;
+    }
+    #notification-popup li:last-child {
+      border-bottom: none;
+    }
+
+    /* Navigation */
+    nav {
+      background: #006a9e;
+      padding: 10px 0;
+    }
     .nav-link {
       color: white;
       text-decoration: none;
@@ -118,91 +121,273 @@
       background: #00557e;
       color: #d1e7ff;
     }
+    nav .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    /* Section */
+    .section { padding: 30px 0; }
+    .greeting, .instructions {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s forwards;
+    }
+    .greeting { font-size: 1.6rem; animation-delay: 0.3s; text-align: right; }
+    .instructions { font-size: 1rem; color: #555; margin-bottom: 25px; animation-delay: 0.5s; text-align: right; }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      animation-delay: 0.7s;
+    }
+    .kpi-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .kpi-number { font-size: 2rem; font-weight: bold; }
+    .kpi-label { color: #666; }
+
+    /* Charts */
+    .charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      animation-delay: 0.9s;
+    }
+    .chart-section {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .chart-section h3 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #0084bd;
+    }
+
+    /* Feed */
+    .feed {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      animation-delay: 1.1s;
+    }
+    .feed h3 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #0084bd;
+    }
+    .feed ul {
+      list-style: none;
+      padding: 0;
+    }
+    .feed li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeFeed 1s forwards;
+    }
+    .feed li:nth-child(1) { animation-delay: 0.3s; }
+    .feed li:nth-child(2) { animation-delay: 0.6s; }
+    .feed li:nth-child(3) { animation-delay: 0.9s; }
+    .feed time {
+      font-size: 0.85rem;
+      color: #888;
+      margin-right: auto;
+    }
+
+    /* Footer */
+    footer {
+      background: #0084bd;
+      color: #fff;
+      text-align: center;
+      padding: 30px 0;
+      margin-top: 40px;
+      border-top-left-radius: 100px;
+      box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+    }
+    footer p { font-size: 16px; }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeFeed {
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
-  
-  <!-- Script for notification popup -->
-  <script>
-    const notifBtn = document.getElementById('notification-btn');
-    const notifPopup = document.getElementById('notification-popup');
-  
-    notifBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      notifPopup.style.display = notifPopup.style.display === 'block' ? 'none' : 'block';
-    });
-  
-    window.addEventListener('click', () => {
-      notifPopup.style.display = 'none';
-    });
-  </script>
-  
-          
-  <section class="section container">
-    <div class="greeting">أهلاً فيصل!</div>
-    <div class="instructions">
-      هنا تستطيع عرض وتحليل بيانات المستخدمين: نظرة عامة، نشاط اليوم، ونمو التسجيلات داخل النظام.
-    </div>
+</head>
 
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-number">120</div>
-        <div class="kpi-label">إجمالي المستخدمين</div>
+<body>
+
+<!-- Loading -->
+<div id="loading">
+  <div class="loader"></div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="container">
+    <img src="images/Takamoul Logo.png" alt="Takamoul Logo" class="takamoul-logo">
+    <div class="header-buttons">
+      <button id="notification-btn"><i class="fas fa-bell"></i></button>
+      <div id="notification-popup">
+        <p><strong>الإشعارات:</strong></p>
+        <ul>
+          <li>تم تحديث صلاحيات المستخدمين</li>
+          <li>ورشة عمل جديدة متاحة للتسجيل</li>
+          <li>تم تحميل تقرير الأداء بنجاح</li>
+        </ul>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-number">45</div>
-        <div class="kpi-label">نشطون اليوم</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-number">12%</div>
-        <div class="kpi-label">معدل النمو الشهري</div>
-      </div>
+      <button onclick="location.href='index.html';"><i class="fas fa-sign-out-alt"></i></button>
     </div>
+    <img src="images/ksu logo.png" alt="KSU Logo" class="ksu-logo">
+  </div>
+</header>
 
-    <div class="charts">
-      <div class="chart-section"><h3>توزيع المستخدمين حسب الفئة</h3><canvas id="userDistributionChart"></canvas></div>
-      <div class="chart-section"><h3>المستخدمون الجدد</h3><canvas id="newUsersChart"></canvas></div>
-      <div class="chart-section"><h3>التسجيل اليومي خلال الأسبوع الماضي</h3><canvas id="dailySignupsChart"></canvas></div>
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <a href="admin-users.html" class="nav-link">بيانات المستخدمين</a>
+    <a href="admin-roles.html" class="nav-link">إدارة الصلاحيات</a>
+    <a href="admin-orcid.html" class="nav-link">تكامل ORCID</a>
+    <a href="admin-systems.html" class="nav-link">حالة الأنظمة المتكاملة</a>
+    <a href="admin-reports.html" class="nav-link">التقارير العامة</a>
+    <a href="admin-events.html" class="nav-link">إدارة الفعاليات</a>
+    <a href="admin-support.html" class="nav-link">الدعم الفني</a>
+    <a href="admin-data.html" class="nav-link">استيراد/تصدير البيانات</a>
+  </div>
+</nav>
+
+<!-- Main Section -->
+<section class="section container">
+  <div class="greeting">أهلاً فيصل!</div>
+  <div class="instructions">
+    هنا تستطيع عرض وتحليل بيانات المستخدمين: نظرة عامة، نشاط اليوم، ونمو التسجيلات داخل النظام.
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-number" id="kpi1">0</div>
+      <div class="kpi-label">إجمالي المستخدمين</div>
     </div>
-
-    <div class="feed">
-      <h3>آخر التسجيلات</h3>
-      <ul>
-        <li>تم تسجيل الطالب “سارة آل ناصر”<time>25 أبريل 2025، 10:15</time></li>
-        <li>تم تسجيل الموظف “خالد العتيبي”<time>24 أبريل 2025، 14:30</time></li>
-        <li>تم تسجيل د. نورة الزهراني<time>23 أبريل 2025، 09:45</time></li>
-      </ul>
+    <div class="kpi-card">
+      <div class="kpi-number" id="kpi2">0</div>
+      <div class="kpi-label">نشطون اليوم</div>
     </div>
-  </section>
+    <div class="kpi-card">
+      <div class="kpi-number" id="kpi3">0%</div>
+      <div class="kpi-label">معدل النمو الشهري</div>
+    </div>
+  </div>
 
-  <footer><p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p></footer>
+  <div class="charts">
+    <div class="chart-section"><h3>توزيع المستخدمين حسب الفئة</h3><canvas id="userDistributionChart"></canvas></div>
+    <div class="chart-section"><h3>المستخدمون الجدد</h3><canvas id="newUsersChart"></canvas></div>
+    <div class="chart-section"><h3>التسجيل اليومي خلال الأسبوع الماضي</h3><canvas id="dailySignupsChart"></canvas></div>
+  </div>
 
-  <!-- Chart.js Code -->
-  <script>
-    new Chart(document.getElementById('userDistributionChart'), {
-      type: 'pie',
-      data: {
-        labels: ['أعضاء هيئة التدريس','طلاب','الموظفون الإداريون'],
-        datasets: [{ data: [30, 70, 20], backgroundColor: ['#4e79a7', '#f28e2b', '#e15759'] }]
-      },
-      options: { responsive:true, plugins:{legend:{position:'bottom'}} }
-    });
+  <div class="feed">
+    <h3>آخر التسجيلات</h3>
+    <ul>
+      <li><i class="fas fa-user-plus" style="color:#0084bd;"></i> تم تسجيل الطالب “سارة آل ناصر”<time>25 أبريل 2025، 10:15</time></li>
+      <li><i class="fas fa-user-plus" style="color:#0084bd;"></i> تم تسجيل الموظف “خالد العتيبي”<time>24 أبريل 2025، 14:30</time></li>
+      <li><i class="fas fa-user-plus" style="color:#0084bd;"></i> تم تسجيل د. نورة الزهراني<time>23 أبريل 2025، 09:45</time></li>
+    </ul>
+  </div>
+</section>
 
-    new Chart(document.getElementById('newUsersChart'), {
-      type: 'bar',
-      data: {
-        labels: ['هذا الأسبوع', 'هذا الشهر'],
-        datasets: [{ label: 'جدد', data: [5, 15], backgroundColor: ['#76b7b2', '#59a14f'] }]
-      },
-      options: { responsive:true, scales:{y:{beginAtZero:true,ticks:{stepSize:5}}}, plugins:{legend:{display:false}} }
-    });
+<!-- Footer -->
+<footer><p>&copy; 2025 جامعة الملك سعود – كل الحقوق محفوظة</p></footer>
 
-    new Chart(document.getElementById('dailySignupsChart'), {
-      type: 'line',
-      data: {
-        labels: ['19 أبريل', '20 أبريل', '21 أبريل', '22 أبريل', '23 أبريل', '24 أبريل', '25 أبريل'],
-        datasets: [{ label: 'تسجيلات يومية', data: [2, 4, 3, 5, 6, 7, 5], fill:false, tension:0.4 }]
-      },
-      options: { responsive:true, scales:{y:{beginAtZero:true,ticks:{stepSize:1}}} }
-    });
-  </script>
+<!-- Scripts -->
+<script>
+  window.addEventListener('load', () => {
+    document.getElementById('loading').style.display = 'none';
+  });
+
+  const notifBtn = document.getElementById('notification-btn');
+  const notifPopup = document.getElementById('notification-popup');
+
+  notifBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    notifPopup.style.display = notifPopup.style.display === 'block' ? 'none' : 'block';
+  });
+
+  window.addEventListener('click', () => {
+    notifPopup.style.display = 'none';
+  });
+
+  function animateValue(id, start, end, duration) {
+    const obj = document.getElementById(id);
+    let startTime = null;
+
+    function animation(currentTime) {
+      if (startTime === null) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      obj.innerText = Math.floor(progress * (end - start) + start);
+      if (progress < 1) requestAnimationFrame(animation);
+    }
+    requestAnimationFrame(animation);
+  }
+
+  window.onload = function() {
+    animateValue("kpi1", 0, 120, 1000);
+    animateValue("kpi2", 0, 45, 1000);
+    animateValue("kpi3", 0, 12, 1000);
+  };
+
+  new Chart(document.getElementById('userDistributionChart'), {
+    type: 'pie',
+    data: {
+      labels: ['أعضاء هيئة التدريس', 'طلاب', 'الموظفون الإداريون'],
+      datasets: [{ data: [30, 70, 20], backgroundColor: ['#4e79a7', '#f28e2b', '#e15759'] }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+  });
+
+  new Chart(document.getElementById('newUsersChart'), {
+    type: 'bar',
+    data: {
+      labels: ['هذا الأسبوع', 'هذا الشهر'],
+      datasets: [{ label: 'جدد', data: [5, 15], backgroundColor: ['#76b7b2', '#59a14f'] }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 5 } } }, plugins: { legend: { display: false } } }
+  });
+
+  new Chart(document.getElementById('dailySignupsChart'), {
+    type: 'line',
+    data: {
+      labels: ['19 أبريل', '20 أبريل', '21 أبريل', '22 أبريل', '23 أبريل', '24 أبريل', '25 أبريل'],
+      datasets: [{ label: 'تسجيلات يومية', data: [2, 4, 3, 5, 6, 7, 5], fill: false, tension: 0.4 }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+  });
+</script>
+
 </body>
 </html>
